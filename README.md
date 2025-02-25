@@ -1,6 +1,6 @@
 # Coffee-PHP-Project
 # File Structure
-<!-- coffee-shop/
+coffee-shop/
 │── public/              # Public-facing files
 │   ├── css/             # CSS styles
 │   ├── js/              # JavaScript files
@@ -12,10 +12,10 @@
 │   ├── templates/       # Reusable HTML templates (header, footer)
 │── database/            # SQL scripts for setup
 │── .gitignore           # Files to ignore in Git
-│── README.md            # Documentation -->
+│── README.md            # Documentation
 
 # Database/
-<!-- coffee-shop/
+coffee-shop/
 │── database/            
 │   ├── migrations/        # SQL scripts for database schema changes
 │   │   ├── 001_create_users_table.sql
@@ -26,4 +26,4 @@
 │   │   ├── products_seeder.sql
 │   ├── backup/            # Backup copies of the database
 │   ├── db_connection.php  # PHP file to connect to MySQL
-│   ├── db_init.sql        # Main script to create the database -->
+│   ├── db_init.sql        # Main script to create the database
