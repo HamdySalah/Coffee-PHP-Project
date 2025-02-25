@@ -1,16 +1,17 @@
 # Coffee-PHP-Project
 # File Structure
 coffee-shop/
-│── public/              # Public-facing files
+│── database/            # SQL scripts for setup
+│── assets/              # Public-facing files
 │   ├── css/             # CSS styles
 │   ├── js/              # JavaScript files
 │   ├── images/          # Image assets
-│   ├── index.php        # Main entry point
-│── src/                 # Core PHP logic
-│   ├── config.php       # Database configuration
-│   ├── functions.php    # Helper functions
-│   ├── templates/       # Reusable HTML templates (header, footer)
-│── database/            # SQL scripts for setup
+├── includes/            # Reusable HTML templates (header, footer)
+│   ├── header.php/              # nav & header
+│   ├── footer.php/          # footer
+├── config.php           # Database configuration
+├── functions.php        # Helper functions 
+│── index.php            # Main entry point
 │── .gitignore           # Files to ignore in Git
 │── README.md            # Documentation
 
