@@ -1,4 +1,4 @@
-<?php include('includes/footer.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,24 +10,24 @@
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="../assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/css/animate.css">
     
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="../assets/css/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../assets/css/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../assets/css/css/magnific-popup.css">
 
-    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="../assets/css/css/aos.css">
 
-    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="../assets/css/css/ionicons.min.css">
 
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="../assets/css/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="../assets/css/css/jquery.timepicker.css">
 
     
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../assets/css/css/flaticon.css">
+    <link rel="stylesheet" href="../assets/css/css/icomoon.css">
+    <link rel="stylesheet" href="../assets/css/css/style.css">
   </head>
   <body>
   	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
