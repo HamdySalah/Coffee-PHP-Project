@@ -29,7 +29,6 @@
   	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
 	      <a class="navbar-brand" href="index.php">Coffee<small>Blend</small></a>
-	      <a class="navbar-brand" href="index.php">Coffee<small>Blend</small></a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -42,7 +41,7 @@
 	          <li class="nav-item <?php echo $current_page == 'contact.html' ? 'active' : ''; ?>"><a href="contact.html" class="nav-link">Contact</a></li>
 	          <li class="nav-item cart <?php echo $current_page == 'cart.html' ? 'active' : ''; ?>"><a href="cart.html" class="nav-link"><span class="icon icon-shopping_cart"></span></a></li>
 	          <li class="nav-item <?php echo $current_page == 'login.php' ? 'active' : ''; ?>"><a href="login.php" class="nav-link">Login</a></li>
-	          <li class="nav-item <?php echo $current_page == 'register.html' ? 'active' : ''; ?>"><a href="register.html" class="nav-link">Register</a></li>
+	          <li class="nav-item <?php echo $current_page == 'register.php' ? 'active' : ''; ?>"><a href="register.php" class="nav-link">Register</a></li>
 	        </ul>
 	      </div>
 		</div>
