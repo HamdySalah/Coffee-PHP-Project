@@ -3537,6 +3537,10 @@ input[type="button"].btn-block {
 .navbar-light .navbar-nav .nav-link.active {
   color: rgba(0, 0, 0, 0.9); }
 
+.navbar-nav .nav-item.active .nav-link {
+  color: gold;
+}
+
 .navbar-light .navbar-toggler {
   color: rgba(0, 0, 0, 0.5);
   border-color: rgba(0, 0, 0, 0.1); }
@@ -7325,13 +7329,13 @@ h1, h2, h3, h4, h5,
       .ftco-navbar-light .navbar-brand {
         color: #fff; } }
   .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
-    font-size: 13px;
+    font-size: 14px;
     padding-top: .9rem;
     padding-bottom: .9rem;
     padding-left: 0;
     padding-right: 0;
     color: rgba(255, 255, 255, 0.9);
-    font-weight: 400;
+    font-weight: 500;
     position: relative;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -8173,7 +8177,8 @@ h1, h2, h3, h4, h5,
   padding-left: 15px;
   padding-right: 15px;
   background: transparent !important;
-  color: rgba(255, 255, 255, 0.4) !important;
+  /* color: rgba(255, 255, 255, 0.4) !important; */
+  color: #fff !important;
   font-size: 14px;
   border-radius: 0px;
   -webkit-box-shadow: none !important;
