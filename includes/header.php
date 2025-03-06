@@ -23,9 +23,6 @@
     <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
-  	<?php
-  	  $current_page = basename($_SERVER['PHP_SELF']);
-  	?>
   	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
 	      <a class="navbar-brand" href="index.php">Coffee<small>Blend</small></a>
@@ -34,14 +31,15 @@
 	      </button>
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item <?php echo $current_page == 'index.php' ? 'active' : ''; ?>"><a href="index.php" class="nav-link">Home</a></li>
-	          <li class="nav-item <?php echo $current_page == 'menu.html' ? 'active' : ''; ?>"><a href="menu.html" class="nav-link">Menu</a></li>
-	          <li class="nav-item <?php echo $current_page == 'services.html' ? 'active' : ''; ?>"><a href="services.html" class="nav-link">Services</a></li>
-	          <li class="nav-item <?php echo $current_page == 'about.html' ? 'active' : ''; ?>"><a href="about.html" class="nav-link">About</a></li>
-	          <li class="nav-item <?php echo $current_page == 'contact.html' ? 'active' : ''; ?>"><a href="contact.html" class="nav-link">Contact</a></li>
-	          <li class="nav-item cart <?php echo $current_page == 'cart.html' ? 'active' : ''; ?>"><a href="cart.html" class="nav-link"><span class="icon icon-shopping_cart"></span></a></li>
-	          <li class="nav-item <?php echo $current_page == 'login.php' ? 'active' : ''; ?>"><a href="login.php" class="nav-link">Login</a></li>
-	          <li class="nav-item <?php echo $current_page == 'register.php' ? 'active' : ''; ?>"><a href="register.php" class="nav-link">Register</a></li>
+	          <li class="nav-item active"><a href="index.php" class="nav-link" >Home</a></li>
+	          <li class="nav-item"><a href="menu.html" class="nav-link">Menu</a></li>
+	          <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+	          <li class="nav-item cart"><a href="cart.html" class="nav-link"><span class="icon icon-shopping_cart"></span></a>
+			  <li class="nav-item"><a href="login.php" class="nav-link">login</a></li>
+			  <li class="nav-item"><a href="register.php" class="nav-link">register</a></li>
+
 	        </ul>
 	      </div>
 		</div>
