@@ -1,22 +1,24 @@
 <?php
-//host
-try {
-    define("HOST", "localhost");
-    //database
-    define("DBNAME", "Cafeteria");
-    //user
-    define("USER", "root");
-    //passwrd
-    define("PASS", "");
-    //port
-    define("PORT", "3307");
+class Database {
+    private $host = "localhost";
+    private $dbname = "Cafeteria";
+    private $username = "root";
+    private $password = "123456Mh*"; 
+    private $conn;
 
-    $conn = new PDO("mysql:host=" . HOST . ";port=" . PORT . ";dbname=" . DBNAME, USER, PASS);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo $e->getMessage();
+    public function connect() {
+        $this->conn = null;
+        try {
+            $this->conn = new PDO(
+                "mysql:host=" . $this->host . ";dbname=" . $this->dbname,
+                $this->username,
+                $this->password
+            );
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Connection Error: " . $e->getMessage();
+        }
+        return $this->conn;
+    }
 }
-// if($conn == true){
-//     echo "Connection is fine";
-// }
-// else echo "Error";
+?>
