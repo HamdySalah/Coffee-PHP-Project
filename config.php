@@ -1,9 +1,18 @@
 <?php
 class Database {
+    
+    // private $host = "localhost";
+    // private $dbname = "Cafeteria";
+    // private $username = "root";
+    // private $password = "123456Mh*"; 
+    // private $conn;
+
+
+    // omar confg
     private $host = "localhost";
-    private $dbname = "Cafeteria";
-    private $username = "root";
-    private $password = "123456Mh*"; 
+    private $dbname = "cafeteria_db";
+    private $username = "admin";
+    private $password = "123"; 
     private $conn;
 
     public function connect() {
