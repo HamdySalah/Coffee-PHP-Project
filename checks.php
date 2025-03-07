@@ -25,7 +25,7 @@ $checks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php require "includes/header.php"; ?>
     <div class="container mt-5">
         <h2>Checks</h2>
-        <table class="table">
+        <table class="table table-custom">
             <thead>
                 <tr>
                     <th>Order ID</th>

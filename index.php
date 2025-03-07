@@ -114,8 +114,7 @@ $total_products = $conn->query("SELECT COUNT(*) FROM Product")->fetchColumn();
 		            <div class="block-18 text-center">
 		              <div class="text">
 		              	<div class="icon"><span class="flaticon-coffee-cup"></span></div>
-                          <strong class="number"><?php echo $total_orders; ?></strong>
-		              	<!-- <strong class="number" data-number="100">0</strong> -->
+		              	<strong class="number" data-number="<?php echo $total_orders; ?>">0</strong>
 		              	<span>Total Orders</span>
 		              </div>
 		            </div>
@@ -124,8 +123,7 @@ $total_products = $conn->query("SELECT COUNT(*) FROM Product")->fetchColumn();
 		            <div class="block-18 text-center">
 		              <div class="text">
 		              	<div class="icon"><span class="flaticon-coffee-cup"></span></div>
-                          <strong class="number"><?php echo $total_users; ?></strong>
-		              	<!-- <strong class="number" data-number="85">0</strong> -->
+		              	<strong class="number" data-number="<?php echo $total_users; ?>">0</strong>
 		              	<span>Total Users</span>
 		              </div>
 		            </div>
@@ -134,8 +132,7 @@ $total_products = $conn->query("SELECT COUNT(*) FROM Product")->fetchColumn();
 		            <div class="block-18 text-center">
 		              <div class="text">
 		              	<div class="icon"><span class="flaticon-coffee-cup"></span></div>
-		              	<!-- <strong class="number" data-number="10567">0</strong> -->
-                          <strong class="number"><?php echo $total_products; ?></strong>
+		              	<strong class="number" data-number="<?php echo $total_products; ?>">0</strong>
 		              	<span>Total Products</span>
 		              </div>
 		            </div>
