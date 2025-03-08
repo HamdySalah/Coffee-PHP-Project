@@ -14,7 +14,7 @@ $stmt = $conn->prepare("SELECT o.*, u.user_name FROM Orders o JOIN User u ON o.f
 $stmt->execute();
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<?php require "includes/header.php"; ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,8 +22,8 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../public/css/style.css" rel="stylesheet">
 </head>
+<?php require "includes/header.php"; ?>
 <body>
-    <?php include 'templates/navbar_admin.php'; ?>
     <div class="container mt-5">
         <h2>All Orders</h2>
         <table class="table">

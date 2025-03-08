@@ -46,7 +46,7 @@
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 							<div class="radio">
-                                <button class="btn btn-primary py-3 px-4">Login</button>
+                  <button class="btn btn-primary py-3 px-4">Login</button>
 						    </div>
 					</div>
                 </div>

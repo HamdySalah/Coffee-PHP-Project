@@ -39,11 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="POST" class="mt-3">
             <div class="mb-3">
                 <label>Name</label>
-                <input type="text" name="name" class="form-control" required>
+                <input type="text" name="name" class="form-control" placeholder="Name" required>
             </div>
             <div class="mb-3">
                 <label>Price</label>
-                <input type="number" step="0.01" name="price" class="form-control" required>
+                <input type="number" step="0.01" name="price" class="form-control" placeholder="Price" required>
             </div>
             <div class="mb-3">
                 <label>Category</label>
