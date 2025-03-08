@@ -1,27 +1,4 @@
-<?php
-session_start();
-require_once 'config.php';
 
-// if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
-//     header("Location: ../public/index.php");
-//     exit();
-// }
-
-$db = new Database();
-$conn = $db->connect();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $role = $_POST['role'];
-
-    $stmt = $conn->prepare("INSERT INTO User (user_name, email, password, role) VALUES (:name, :email, :password, :role)");
-    $stmt->execute(['name' => $name, 'email' => $email, 'password' => $password, 'role' => $role]);
-    header("Location: user.php");
-    exit();
-}
-?>
 
 <!DOCTYPE html>
 <html>
