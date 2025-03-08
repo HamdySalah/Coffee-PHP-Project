@@ -27,28 +27,21 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container mt-5">
         <h2>Products</h2>
         <a href="add_product.php" class="btn btn-success mb-3">Add Product</a>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($products as $product): ?>
-                    <tr>
-                        <td><?php echo $product['product_id']; ?></td>
-                        <td><?php echo $product['product_name']; ?></td>
-                        <td><?php echo $product['category_name']; ?></td>
-                        <td><?php echo $product['price']; ?></td>
-                        <td><?php echo $product['status']; ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <div class="row">
+            <?php foreach ($products as $product): ?>
+                <div class="col-md-3 mb-3">
+                    <div class="card">
+                        <img src="assets/images/drink-5.jpg" class="card-img-top" alt="Product Image" style="height: 50%;">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $product['product_name']; ?></h5>
+                            <p class="card-text">Category: <?php echo $product['category_name']; ?></p>
+                            <p class="card-text">Price: <?php echo $product['price']; ?> $</p>
+                            <p style="color=green" class="card-text">Status: <?php echo $product['status']; ?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
     <?php require "includes/footer.php"; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
