@@ -22,10 +22,7 @@ elseif( $_SESSION['role'] != 1){
     header("Location:index.php");
     exit();
 }
-else {
-    header("Location:validate.php");
-    exit();
-}
+
 // if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
 //     header("Location: ../public/index.php");
 //     exit();
