@@ -10,44 +10,207 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
 $db = new Database();
 $conn = $db->connect();
 
-$stmt = $conn->prepare("SELECT o.*, u.user_name FROM Orders o JOIN User u ON o.f_user_id = u.user_id");
-$stmt->execute();
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['order_id']) && isset($_POST['status'])) {
+    $stmt = $conn->prepare("UPDATE Orders SET status = :status WHERE order_id = :order_id");
+    $stmt->execute([':status' => $_POST['status'], ':order_id' => $_POST['order_id']]);
+    header("Location: admin_orders.php?" . http_build_query($_GET));
+    exit();
+}
+
+$where_clause = "";
+$params = [];
+$filters_applied = false;
+
+if (isset($_GET['filter_date']) && !empty($_GET['filter_date'])) {
+    $where_clause .= " WHERE DATE(o.order_date) = :filter_date";
+    $params[':filter_date'] = $_GET['filter_date'];
+    $filters_applied = true;
+}
+
+if (isset($_GET['filter_user']) && !empty($_GET['filter_user'])) {
+    $where_clause .= $filters_applied ? " AND" : " WHERE";
+    $where_clause .= " (u.user_name LIKE :filter_user OR u.user_id = :filter_user_id)";
+    $params[':filter_user'] = "%" . $_GET['filter_user'] . "%";
+    $params[':filter_user_id'] = (int)$_GET['filter_user'];
+    $filters_applied = true;
+}
+
+if (isset($_GET['filter_status']) && !empty($_GET['filter_status'])) {
+    $where_clause .= $filters_applied ? " AND" : " WHERE";
+    $where_clause .= " o.status = :filter_status";
+    $params[':filter_status'] = $_GET['filter_status'];
+    $filters_applied = true;
+}
+
+$stmt = $conn->prepare("
+    SELECT o.order_id, o.order_date, o.status, u.user_name,
+           GROUP_CONCAT(CONCAT(p.product_name, ' (', op.quntity, ' x $', p.price, ')') SEPARATOR ', ') AS products,
+           SUM(op.quntity) AS total_quantity,
+           SUM(op.quntity * p.price) AS total_price
+    FROM Orders o
+    JOIN User u ON o.f_user_id = u.user_id
+    LEFT JOIN Order_product op ON o.order_id = op.f_order_id
+    LEFT JOIN Product p ON op.f_product_id = p.product_id
+    $where_clause
+    GROUP BY o.order_id, o.order_date, o.status, u.user_name
+    ORDER BY o.order_date DESC
+");
+$stmt->execute($params);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$total_orders = count($orders);
+$total_revenue = array_sum(array_column($orders, 'total_price'));
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>All Orders</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../public/css/style.css" rel="stylesheet">
+    <title>All Orders - Coffee</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/aos.css">
+    <link rel="stylesheet" href="assets/css/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="assets/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/icomoon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .status-overdue { background-color: #f8d7da; color:rgb(250, 102, 117); }
+    </style>
 </head>
-<?php require "includes/header.php"; ?>
 <body>
-    <div class="container mt-5">
-        <h2>All Orders</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>User</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($orders as $order): ?>
-                    <tr>
-                        <td><?php echo $order['order_id']; ?></td>
-                        <td><?php echo $order['user_name']; ?></td>
-                        <td><?php echo $order['order_date']; ?></td>
-                        <td><?php echo $order['status']; ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+    <?php require "includes/header.php"; ?>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 ftco-animate">
+                    <h3 class="mb-4 billing-heading text-center">All Orders</h3>
+
+                    <form method="GET" class="mb-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="filter_date">Filter by Date</label>
+                                    <input type="date" name="filter_date" id="filter_date" class="form-control" value="<?php echo isset($_GET['filter_date']) ? htmlspecialchars($_GET['filter_date']) : ''; ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="filter_user">Filter by User (Name or ID)</label>
+                                    <input type="text" name="filter_user" id="filter_user" class="form-control" value="<?php echo isset($_GET['filter_user']) ? htmlspecialchars($_GET['filter_user']) : ''; ?>" placeholder="e.g., Adham or 2">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="filter_status">Filter by Status</label>
+                                    <select name="filter_status" id="filter_status" class="form-control">
+                                        <option value="">All Statuses</option>
+                                        <option value="Processing" <?php echo (isset($_GET['filter_status']) && $_GET['filter_status'] == 'Processing') ? 'selected' : ''; ?>>Processing</option>
+                                        <option value="Out for delivery" <?php echo (isset($_GET['filter_status']) && $_GET['filter_status'] == 'Out for delivery') ? 'selected' : ''; ?>>Out for Delivery</option>
+                                        <option value="Done" <?php echo (isset($_GET['filter_status']) && $_GET['filter_status'] == 'Done') ? 'selected' : ''; ?>>Done</option>
+                                        <option value="Canceled" <?php echo (isset($_GET['filter_status']) && $_GET['filter_status'] == 'Canceled') ? 'selected' : ''; ?>>Canceled</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-end mt-2">
+                                <button type="submit" class="btn btn-primary py-2 px-4">Filter</button>
+                                <a href="admin_orders.php" class="btn btn-secondary py-2 px-4 ml-2">Clear</a>
+                            </div>
+                        </div>
+                    </form>
+
+                    <?php if (empty($orders)): ?>
+                        <p class="text-center text-white">No orders found<?php echo $filters_applied ? ' for these filters' : ''; ?>.</p>
+                    <?php else: ?>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Date</th>
+                                        <th>User</th>
+                                        <th>Products (Quantity x Price)</th>
+                                        <th>Total Quantity</th>
+                                        <th>Total Price</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($orders as $order): ?>
+                                        <?php
+                                        $order_age = (strtotime('now') - strtotime($order['order_date'])) / (60 * 60); // Hours
+                                        $display_status = ($order['status'] == 'Processing' && $order_age > 24) ? 'Canceled' : $order['status'];
+                                        ?>
+                                        <tr <?php echo $display_status == 'Canceled' ? 'class="status-overdue"' : ''; ?>>
+                                            <td><?php echo $order['order_id']; ?></td>
+                                            <td><?php echo date('Y-m-d H:i', strtotime($order['order_date'])); ?></td>
+                                            <td><?php echo $order['user_name']; ?></td>
+                                            <td><?php echo $order['products'] ?: 'No products'; ?></td>
+                                            <td><?php echo $order['total_quantity'] ?: 0; ?></td>
+                                            <td>$<?php echo number_format($order['total_price'] ?: 0, 2); ?></td>
+                                            <td>
+                                                <form method="POST" class="d-inline">
+                                                    <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                                                    <select name="status" class="form-control form-control-sm d-inline-block w-auto" onchange="this.form.submit()">
+                                                        <option value="Processing" <?php echo $display_status == 'Processing' ? 'selected' : ''; ?>>Processing</option>
+                                                        <option value="Out for delivery" <?php echo $display_status == 'Out for delivery' ? 'selected' : ''; ?>>Out for Delivery</option>
+                                                        <option value="Done" <?php echo $display_status == 'Done' ? 'selected' : ''; ?>>Done</option>
+                                                        <option value="Canceled" <?php echo $display_status == 'Canceled' ? 'selected' : ''; ?>>Canceled</option>
+                                                    </select>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="table-light">
+                                        <td colspan="3"><strong>Total Orders: <?php echo $total_orders; ?></strong></td>
+                                        <td colspan="2"></td>
+                                        <td><strong>Total Revenue: $<?php echo number_format($total_revenue, 2); ?></strong></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="text-center mt-4">
+                        <a href="index.php" class="btn btn-secondary py-3 px-4">Back to Home</a>
+                        <a href="user_order_form.php" class="btn btn-primary py-3 px-4">Add Order for User</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <?php require "includes/footer.php"; ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.easing.1.3.js"></script>
+    <script src="assets/js/jquery.waypoints.min.js"></script>
+    <script src="assets/js/jquery.stellar.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/aos.js"></script>
+    <script src="assets/js/jquery.animateNumber.min.js"></script>
+    <script src="assets/js/bootstrap-datepicker.js"></script>
+    <script src="assets/js/jquery.timepicker.min.js"></script>
+    <script src="assets/js/scrollax.min.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

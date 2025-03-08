@@ -6,10 +6,6 @@ if(!isset($_SESSION['user_id'])) {
     header("Location:login.php");
     exit();
 }
-// if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
-//     header("Location: ../public/index.php");
-//     exit();
-// }
 
 $db = new Database();
 $conn = $db->connect();
@@ -29,9 +25,8 @@ $total_products = $conn->query("SELECT COUNT(*) FROM Product")->fetchColumn();
             	<span class="subheading">Welcome </span> <?php echo $_SESSION['user_name']; ?>
               <h1 class="mb-4">The Best Coffee Testing Experience</h1>
               <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
+              <p><a href="user_order_form.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
             </div>
-
           </div>
         </div>
       </div>
@@ -45,7 +40,7 @@ $total_products = $conn->query("SELECT COUNT(*) FROM Product")->fetchColumn();
             	<span class="subheading">Welcome</span>
               <h1 class="mb-4">Amazing Taste &amp; Beautiful Place</h1>
               <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
+              <p><a href="user_order_form.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
             </div>
 
           </div>
@@ -61,7 +56,7 @@ $total_products = $conn->query("SELECT COUNT(*) FROM Product")->fetchColumn();
             	<span class="subheading">Welcome</span>
               <h1 class="mb-4">Creamy Hot and Ready to Serve</h1>
               <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
+              <p><a href="user_order_form.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
             </div>
 
           </div>
@@ -77,7 +72,7 @@ $total_products = $conn->query("SELECT COUNT(*) FROM Product")->fetchColumn();
 	          	<span class="subheading">Discover</span>
 	            <h2 class="mb-4">Our Menu</h2>
 	            <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-	            <p><a href="#" class="btn btn-primary btn-outline-primary px-4 py-3">View Full Menu</a></p>
+	            <p><a href="product.php" class="btn btn-primary btn-outline-primary px-4 py-3">View Full Menu</a></p>
 	          </div>
     			</div>
     			<div class="col-md-6">
