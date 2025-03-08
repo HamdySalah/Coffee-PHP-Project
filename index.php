@@ -1,6 +1,7 @@
 <?php require "includes/header.php"; ?>
 <?php
 require_once 'config.php';
+require_once 'Database.php';
 
 if(!isset($_SESSION['user_id'])) {
     header("Location:login.php");
@@ -8,12 +9,16 @@ if(!isset($_SESSION['user_id'])) {
 }
 
 $db = new Database();
-$conn = $db->connect();
 
-$total_orders = $conn->query("SELECT COUNT(*) FROM Orders")->fetchColumn();
-$total_users = $conn->query("SELECT COUNT(*) FROM User WHERE role = 0")->fetchColumn();
-$total_admin = $conn->query("SELECT COUNT(*) FROM User WHERE role = 1")->fetchColumn();
-$total_products = $conn->query("SELECT COUNT(*) FROM Product")->fetchColumn();
+// Fetch total counts using Database class methods
+$total_orders = count($db->fetchAllOrders());
+$total_users = count(array_filter($db->fetchAllUsers(), function($user) {
+    return $user['role'] == 0;
+}));
+$total_admin = count(array_filter($db->fetchAllUsers(), function($user) {
+    return $user['role'] == 1;
+}));
+$total_products = count($db->fetchAllProducts());
 ?>
     <section class="home-slider owl-carousel">
       <div class="slider-item" style="background-image: url(assets/images/bg_1.jpg);">

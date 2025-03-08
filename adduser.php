@@ -13,6 +13,7 @@
 </head>
 <?php
 require_once 'config.php';
+require_once 'validate.php';
 
 if(!isset($_SESSION['user_id'])) {
     header("Location:login.php");
@@ -23,27 +24,20 @@ elseif( $_SESSION['role'] != 1){
     exit();
 }
 
-// if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
-//     header("Location: ../public/index.php");
-//     exit();
-// }
 $db = new Database();
-$conn = $db->connect();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    echo "POST";
-    $name = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['pass'];
-    $Cpassword = $_POST['cpass'];
-    $room = $_POST['room'];
-    $ext = $_POST['ext'];
+    // Include validation logic
+    include 'validate.php';
 
-
-    $stmt = $conn->prepare("INSERT INTO User (user_name, email, password, ) VALUES (:name, :email, :password, :role)");
-    $stmt->execute(['name' => $name, 'email' => $email, 'password' => $password, 'role' => $role]);
-    header("Location: user.php");
-    exit();
+    if (empty($error)) {
+        // Insert user if no errors
+        $db->insertUser($name, $email, $password, $room, $ext);
+        header("Location: user.php");
+        exit();
+    } else {
+        echo "<div class='alert alert-danger'>$error</div>";
+    }
 }
 ?>
 <section class="ftco-section">
@@ -82,10 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label for="room">Room No</label>
                                 <select id="room" name="room" class="form-control" required>
                                     <?php 
-                                    $stmt = $conn->prepare('SELECT * FROM user_room');
-                                    $stmt->execute();
-                                    $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                    var_dump($rooms);
+                                    $rooms = $db->fetchAllRooms();
                                     foreach ($rooms as $room) {
                                         echo "<option value='".$room['room_name']."'>".$room['room_name']."</option>";
                                     }
