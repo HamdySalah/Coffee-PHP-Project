@@ -1,6 +1,7 @@
 <?php
 class Database {
     #Mostafa Config
+    #Mostafa Config
     // private $host = "localhost";
     // private $dbname = "Cafeteria";
     // private $username = "root";
@@ -15,12 +16,30 @@ class Database {
     private $port = "3307"; 
     private $conn;
     
+    // private $conn;      
+    
+    # Hamdy Config
+    // private $host = "localhost";
+    // private $dbname = "cafeteria"; #cafeteria
+    // private $username = "root";
+    // private $password = ""; 
+    // private $port = "3307"; 
+    // private $conn;
+    
     // omar confg
     /*private $host = "localhost";
     private $dbname = "cafeteria_db";
     private $username = "admin";
     private $password = "123"; 
     private $conn;*/
+
+    //yasmeen confg
+    // private $host = "localhost";
+    // private $dbname = "cafeteria";
+    // private $username = "root";
+    // private $password = ""; 
+    // private $conn;
+    private $conn;
 
     //yasmeen confg
     // private $host = "localhost";

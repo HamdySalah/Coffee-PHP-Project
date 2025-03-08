@@ -37,19 +37,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="POST" class="mt-3">
             <div class="mb-3">
                 <label>Name</label>
-                <input type="text" name="name" class="form-control" required>
+                <input type="text" name="name" class="form-control styled-input" placeholder="Enter your name" required>
             </div>
             <div class="mb-3">
                 <label>Email</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" name="email" class="form-control styled-input" placeholder="Enter your email" required>
             </div>
             <div class="mb-3">
                 <label>Password</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" class="form-control styled-input" placeholder="Enter your password" required>
             </div>
             <div class="mb-3">
                 <label>Role</label>
-                <select name="role" class="form-control" required>
+                <select name="role" class="form-control styled-input" required>
                     <option value="0">User</option>
                     <option value="1">Admin</option>
                 </select>

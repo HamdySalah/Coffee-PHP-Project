@@ -9054,6 +9054,22 @@ textarea.form-control {
   .custom-pagination .next {
     float: right; }
 
+/* ...existing code... */
+
+.styled-input  {
+  border: 1px solid #ccc !important;
+  padding: 10px !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.styled-input:focus {
+  border-color: gold !important;
+  outline: none !important;
+}
+
+/* ...existing code... */
+
 /* Blog*/
 .post-info {
   font-size: 12px;
