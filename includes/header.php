@@ -35,11 +35,10 @@
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item <?php echo $current_page == 'index.php' ? 'active' : ''; ?>"><a href="index.php" class="nav-link">Home</a></li>
-              <li class="nav-item <?php echo $current_page == 'menu.html' ? 'active' : ''; ?>"><a href="menu.html" class="nav-link">Menu</a></li>
+              <li class="nav-item <?php echo $current_page == 'menu.html' ? 'active' : ''; ?>"><a href="product.php" class="nav-link">products</a></li>
               <li class="nav-item <?php echo $current_page == 'checks.php' ? 'active' : ''; ?>"><a href="checks.php" class="nav-link">Checks</a></li>
               <li class="nav-item <?php echo $current_page == 'about.php' ? 'active' : ''; ?>"><a href="user.php" class="nav-link">users</a></li>
               <li class="nav-item <?php echo $current_page == 'contact.html' ? 'active' : ''; ?>"><a href="contact.html" class="nav-link">Contact</a></li>
-              <li class="nav-item cart <?php echo $current_page == 'cart.html' ? 'active' : ''; ?>"><a href="cart.html" class="nav-link"><span class="icon icon-shopping_cart"></span></a></li>
               <li class="nav-item <?php echo $current_page == 'login.php' ? 'active' : ''; ?>"><a href="login.php" class="nav-link">Login</a></li>
               <li class="nav-item <?php echo $current_page == 'register.php' ? 'active' : ''; ?>"><a href="register.php" class="nav-link">Register</a></li>
             </ul>
