@@ -13,6 +13,7 @@ $conn = $db->connect();
 
 $total_orders = $conn->query("SELECT COUNT(*) FROM Orders")->fetchColumn();
 $total_users = $conn->query("SELECT COUNT(*) FROM User WHERE role = 0")->fetchColumn();
+$total_admin = $conn->query("SELECT COUNT(*) FROM User WHERE role = 1")->fetchColumn();
 $total_products = $conn->query("SELECT COUNT(*) FROM Product")->fetchColumn();
 ?>
     <section class="home-slider owl-carousel">
@@ -141,8 +142,9 @@ $total_products = $conn->query("SELECT COUNT(*) FROM Product")->fetchColumn();
 		            <div class="block-18 text-center">
 		              <div class="text">
 		              	<div class="icon"><span class="flaticon-coffee-cup"></span></div>
-		              	<strong class="number" data-number="2">0</strong>
-		              	<span>Total Branch</span>
+                          <strong class="number" data-number="<?php echo $total_admin; ?>">0</strong>
+		              	<!-- <strong class="number" data-number="2">0</strong> -->
+		              	<span>Admin</span>
 		              </div>
 		            </div>
 		          </div>
