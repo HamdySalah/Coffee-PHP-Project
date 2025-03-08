@@ -1,3 +1,24 @@
+<?php
+session_start();
+require_once 'config.php';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['logpass'];
+    $db = new Database();
+    $conn = $db->connect();
+    $stmt = $conn->prepare("SELECT * FROM User WHERE email = :email");
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($user["email"] == $email && $password == $user['password']) {
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['role'] = $user['role'];
+        $_SESSION['user_name'] = $user['user_name'];
+        header("Location: index.php");
+        exit();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,7 +48,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12 ftco-animate">
-			<form action="#" class="billing-form ftco-bg-dark p-3 p-md-5">
+			<form action="#" class="billing-form ftco-bg-dark p-3 p-md-5" method="post">
 				<h3 class="mb-4 billing-heading">Login</h3>
 	          	<div class="row align-items-end">
 	          		<div class="col-md-12">

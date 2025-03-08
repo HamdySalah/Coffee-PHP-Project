@@ -14,8 +14,7 @@ class Database {
     private $password = ""; 
     private $port = "3307"; 
     private $conn;
-       
-
+    
     // omar confg
     /*private $host = "localhost";
     private $dbname = "cafeteria_db";

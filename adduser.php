@@ -52,7 +52,6 @@
                             <div class="form-group mt-4">
                                 <button type="submit" name="submit" class="btn btn-primary py-3 px-4">Save</button>
                                 <button type="reset" name="reset" class="btn btn-secondary py-3 px-4">Reset</button>
-                                <button type="button" name="add_user" class="btn btn-success py-3 px-4">Add User</button>
                             </div>
                         </div>
                     </div>
