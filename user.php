@@ -47,6 +47,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </tbody>
         </table>
     </div>
+    <button type="button" name="add_user" class="btn btn-success py-3 px-4">Add User</button>
     <?php require "includes/footer.php"; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
