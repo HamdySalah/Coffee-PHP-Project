@@ -1,17 +1,14 @@
 <?php
-// session_start();
+session_start();
 require_once 'config.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
 
 if ($_SESSION['role'] != 1) {
     header("Location: index.php");
-    exit();
-}
-elseif(!isset($_SESSION['user_id'])) {
-    header("Location:login.php");
-    exit();
-}
-else {
-	echo "sdvjla'/odfuvasshgva/sbvaz;kdsnbvas;JLdbvaS:VIdbkasP:VBiaslvbdas/kvba/vjkan/a خلي بالك يعم الحج هيعفلوك";
     exit();
 }
 
