@@ -5,15 +5,22 @@ class Database {
     // private $dbname = "Cafeteria";
     // private $username = "root";
     // private $password = "123456Mh*"; 
-    // private $conn;                                                                                                                                                                                      
+    // private $conn;      
+    
+    # Hamdy Config
+    private $host = "localhost";
+    private $dbname = "cafeteria"; #cafeteria
+    private $username = "root";
+    private $password = ""; 
+    private $port = "3307"; 
+    private $conn;
+    
     // private $host = "localhost";
     // private $dbname = "cafeteria"; #cafeteria
     // private $username = "root";
     // private $password = ""; 
     // private $port = "3307"; 
-    // private $conn;
 
-<<<<<<< HEAD
 
     // omar confg
     /*private $host = "localhost";
@@ -23,18 +30,11 @@ class Database {
     private $conn;*/
 
     //yasmeen confg
-    private $host = "localhost";
-    private $dbname = "cafeteria";
-    private $username = "root";
-    private $password = ""; 
-=======
-    private $host = "localhost";
-    private $dbname = "cafeteria"; #cafeteria
-    private $username = "root";
-    private $password = ""; 
-    private $port = "3307"; 
->>>>>>> 4dca567 (Hamdy Config)
-    private $conn;
+    // private $host = "localhost";
+    // private $dbname = "cafeteria";
+    // private $username = "root";
+    // private $password = ""; 
+    // private $conn;
 
     public function connect() {
         $this->conn = null;
