@@ -27,6 +27,25 @@ if (session_status() == PHP_SESSION_NONE) {
     <link rel="stylesheet" href="assets/css/flaticon.css">
     <link rel="stylesheet" href="assets/css/icomoon.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+      .navbar-nav {
+        margin: 0 auto;
+      }
+      .user-profile {
+        display: flex;
+        align-items: center;
+      }
+      .user-profile img {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+      }
+      .dropdown-menu {
+        right: 0;
+        left: auto;
+      }
+    </style>
   </head>
   <body>
   <?php
@@ -39,7 +58,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <span class="oi oi-menu">Menu</span> 
           </button>
           <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav mx-auto">
               <?php if($_SESSION['role'] == 1): ?>
               <li class="nav-item <?php echo $current_page == 'index.php' ? 'active' : ''; ?>"><a href="index.php" class="nav-link">Home</a></li>
               <li class="nav-item <?php echo $current_page == 'product.php' ? 'active' : ''; ?>"><a href="product.php" class="nav-link">Products</a></li>
@@ -54,6 +73,18 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li class="nav-item <?php echo $current_page == 'login.php' ? 'active' : ''; ?>"><a href="login.php" class="nav-link">Login</a></li>
               <?php endif; ?>
             </ul>
+            <div class="user-profile">
+              <img src="uploads/pic3.jpg" alt="User Profile Picture">
+              <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <?php echo $_SESSION['user_name']; ?>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="userDropdown">
+                  <a class="dropdown-item" href="#"><?php echo $_SESSION['user_name']; ?></a>
+                  <a class="dropdown-item" href="logout.php">Logout</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
