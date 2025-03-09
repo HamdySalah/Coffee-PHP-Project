@@ -13,6 +13,7 @@
 </head>
 <?php
 require_once 'config.php';
+require_once 'Database.php';
 require_once 'validate.php';
 
 if(!isset($_SESSION['user_id'])) {
