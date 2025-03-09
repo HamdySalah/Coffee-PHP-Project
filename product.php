@@ -37,15 +37,6 @@ $query .= " ORDER BY p.product_id DESC";
 $stmt = $conn->prepare($query);
 $stmt->execute($params);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Handle delete request
-if (isset($_GET['delete_id'])) {
-    $delete_id = intval($_GET['delete_id']);
-    $delete_stmt = $conn->prepare("DELETE FROM Product WHERE product_id = :delete_id");
-    $delete_stmt->execute([':delete_id' => $delete_id]);
-    header("Location: product.php");
-    exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -136,7 +127,7 @@ if (isset($_GET['delete_id'])) {
                                 Status: <?php echo htmlspecialchars($product['status']); ?>
                             </p>
                             <a href="edit_product.php?id=<?php echo $product['product_id']; ?>" class="btn btn-warning">Edit</a>
-                            <a href="product.php?delete_id=<?php echo $product['product_id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                            <a href="delete_product.php?id=<?php echo $product['product_id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
                           <br>  <a href="user_order_form.php?id=<?php echo $product['product_id']; ?>" class="btn btn-primary">Order Now</a>
                         </div>
                     </div>
