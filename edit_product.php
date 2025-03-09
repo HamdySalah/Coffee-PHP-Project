@@ -2,7 +2,7 @@
 session_start();
 require_once 'config.php';
 
-// Check if user is logged in and has admin role (uncommented and fixed)
+// Check if user is logged in and has admin role
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../public/index.php");
     exit();
@@ -12,6 +12,21 @@ $db = new Database();
 $conn = $db->connect();
 
 $categories = $conn->query("SELECT * FROM Category")->fetchAll(PDO::FETCH_ASSOC);
+
+if (!isset($_GET['id'])) {
+    header("Location: product.php");
+    exit();
+}
+
+$product_id = intval($_GET['id']);
+$product_stmt = $conn->prepare("SELECT * FROM Product WHERE product_id = :product_id");
+$product_stmt->execute([':product_id' => $product_id]);
+$product = $product_stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$product) {
+    header("Location: product.php");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = trim($_POST['name']); // Sanitize input
@@ -24,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Invalid input data";
     } else {
         // Handle file upload
-        $product_image = null;
+        $product_image = $product['product_image'];
         if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 0) {
             $target_dir = "uploads/product/";
             // Ensure directory exists
@@ -51,14 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (!isset($error)) {
             try {
-                $stmt = $conn->prepare("INSERT INTO Product (product_name, price, f_category_id, status, product_image) 
-                                      VALUES (:name, :price, :category_id, :status, :product_image)");
+                $stmt = $conn->prepare("UPDATE Product SET product_name = :name, price = :price, f_category_id = :category_id, status = :status, product_image = :product_image WHERE product_id = :product_id");
                 $stmt->execute([
                     'name' => $name,
                     'price' => $price,
                     'category_id' => $category_id,
                     'status' => $status,
-                    'product_image' => $product_image
+                    'product_image' => $product_image,
+                    'product_id' => $product_id
                 ]);
                 header("Location: product.php");
                 exit();
@@ -73,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Product</title>
+    <title>Edit Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
@@ -90,25 +105,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 <?php require "includes/header.php"; ?>
 <div class="container mt-5">
-    <h2>Add Product</h2>
+    <h2>Edit Product</h2>
     <?php if (isset($error)): ?>
         <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
     <?php endif; ?>
     <form method="POST" class="mt-3" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" class="form-control" placeholder="Name" required>
+            <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="<?php echo htmlspecialchars($product['product_name']); ?>" required>
         </div>
         <div class="mb-3">
             <label for="price">Price</label>
-            <input type="number" step="0.01" name="price" id="price" class="form-control" placeholder="Price" required min="0">
+            <input type="number" step="0.01" name="price" id="price" class="form-control" placeholder="Price" value="<?php echo htmlspecialchars($product['price']); ?>" required min="0">
         </div>
         <div class="mb-3">
             <label for="category_id">Category</label>
             <select name="category_id" id="category_id" class="form-control" required>
                 <option value="">Select Category</option>
                 <?php foreach ($categories as $category): ?>
-                    <option value="<?php echo $category['category_id']; ?>">
+                    <option value="<?php echo $category['category_id']; ?>" <?php echo ($product['f_category_id'] == $category['category_id']) ? 'selected' : ''; ?>>
                         <?php echo htmlspecialchars($category['category_name']); ?>
                     </option>
                 <?php endforeach; ?>
@@ -117,15 +132,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="mb-3">
             <label for="product_picture">Product Picture</label>
             <input type="file" id="product_picture" class="form-control" name="product_picture" accept="image/*">
+            <?php if (!empty($product['product_image']) && file_exists($product['product_image'])): ?>
+                <img src="<?php echo htmlspecialchars($product['product_image']); ?>" alt="Product Image" style="max-width: 100px; margin-top: 10px;">
+            <?php endif; ?>
         </div>
         <div class="mb-3">
             <label for="status">Status</label>
             <select name="status" id="status" class="form-control" required>
-                <option value="available">Available</option>
-                <option value="unavailable">Unavailable</option>
+                <option value="available" <?php echo ($product['status'] == 'available') ? 'selected' : ''; ?>>Available</option>
+                <option value="unavailable" <?php echo ($product['status'] == 'unavailable') ? 'selected' : ''; ?>>Unavailable</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Add Product</button>
+        <button type="submit" class="btn btn-primary">Edit Product</button>
     </form>
 </div>
 <?php require "includes/footer.php"; ?>
