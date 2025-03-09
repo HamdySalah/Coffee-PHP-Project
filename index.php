@@ -126,7 +126,7 @@ $total_products = count($db->fetchAllProducts());
 		          <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
 		            <div class="block-18 text-center">
 		              <div class="text">
-		              	<div class="icon"><span class="flaticon-coffee-cup"></span></div>
+		              	<div class="icon"><span class="bi bi-people"></span></div>
 		              	<strong class="number" data-number="<?php echo $total_users; ?>">0</strong>
 		              	<span>Total Users</span>
 		              </div>
@@ -135,7 +135,7 @@ $total_products = count($db->fetchAllProducts());
 		          <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
 		            <div class="block-18 text-center">
 		              <div class="text">
-		              	<div class="icon"><span class="flaticon-coffee-cup"></span></div>
+		              	<div class="icon"><span class="bi bi-cart"></span></div>
 		              	<strong class="number" data-number="<?php echo $total_products; ?>">0</strong>
 		              	<span>Total Products</span>
 		              </div>
@@ -144,7 +144,7 @@ $total_products = count($db->fetchAllProducts());
 		          <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
 		            <div class="block-18 text-center">
 		              <div class="text">
-		              	<div class="icon"><span class="flaticon-coffee-cup"></span></div>
+		              	<div class="icon"><span class="bi bi-person-gear"></span></div>
                           <strong class="number" data-number="<?php echo $total_admin; ?>">0</strong>
 		              	<!-- <strong class="number" data-number="2">0</strong> -->
 		              	<span>Admin</span>

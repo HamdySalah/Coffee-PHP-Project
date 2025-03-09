@@ -14,6 +14,8 @@ if (session_status() == PHP_SESSION_NONE) {
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
 
     <link rel="stylesheet" href="assets/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/animate.css">
@@ -67,6 +69,7 @@ if (session_status() == PHP_SESSION_NONE) {
               <li class="nav-item <?php echo $current_page == 'checks.php' ? 'active' : ''; ?>"><a href="checks.php" class="nav-link">Checks</a></li>
               <?php else: ?>
                 <li class="nav-item <?php echo $current_page == 'index.php' ? 'active' : ''; ?>"><a href="index.php" class="nav-link">Home</a></li>
+                <li class="nav-item <?php echo $current_page == 'product.php' ? 'active' : ''; ?>"><a href="product.php" class="nav-link">Menu</a></li>
                 <li class="nav-item <?php echo $current_page == 'user_orders.php' ? 'active' : ''; ?>"><a href="user_orders.php" class="nav-link">My Orders</a></li>
                 <li class="nav-item <?php echo $current_page == 'about.php' ? 'active' : ''; ?>"><a href="about.php" class="nav-link">About</a></li>
               <?php endif; ?>
@@ -78,7 +81,7 @@ if (session_status() == PHP_SESSION_NONE) {
                   <?php echo $_SESSION['user_name']; ?>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="userDropdown">
-                  <a class="dropdown-item" href="#"><?php echo $_SESSION['user_name']; ?></a>
+                  <a class="dropdown-item" href="index.php"><?php echo $_SESSION['user_name']; ?></a>
                   <a class="dropdown-item" href="logout.php">Logout</a>
                 </div>
               </div>

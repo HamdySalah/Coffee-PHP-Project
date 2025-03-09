@@ -3,14 +3,6 @@ session_start();
 require_once 'config.php';
 require_once 'Database.php';
 
-// Optional: Add role check if this page should be restricted
-/*
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../public/index.php");
-    exit();
-}
-*/
-
 $db = new Database();
 $conn = $db->connect();
 
@@ -130,10 +122,15 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </p>
                             <?php if($_SESSION['role'] == 1): ?>
                             <a href="edit_product.php?id=<?php echo $product['product_id']; ?>" class="btn btn-warning">Edit</a>
-                            <a href="delete_product.php?id=<?php echo $product['product_id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                            <a href="delete_product.php?product_id=<?php echo $product['product_id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
                             <?php endif; ?>
+                            <?php if($product['status'] === 'available'): ?>
                             <br>  
                             <a href="user_order_form.php?id=<?php echo $product['product_id']; ?>" class="btn btn-primary">Order Now</a>
+                            <?php else: ?>
+                            <br>
+                            <button class="btn btn-secondary" style="margin-top: 6px;" disabled>Unavailable</button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

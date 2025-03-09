@@ -11,8 +11,11 @@ if (!isset($_SESSION['user_id'])) {
 $db = new Database();
 $conn = $db->connect();
 
-$products = $conn->query("SELECT * FROM Product WHERE status = 'available'")->fetchAll(PDO::FETCH_ASSOC);
+// Fetch products ordered by product_id in descending order
+$products = $conn->query("SELECT * FROM Product WHERE status = 'available' ORDER BY product_id DESC")->fetchAll(PDO::FETCH_ASSOC);
 $users = $_SESSION['role'] == 1 ? $conn->query("SELECT * FROM User WHERE role = 0")->fetchAll(PDO::FETCH_ASSOC) : [];
+
+$selected_product_id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_SESSION['role'] == 1 ? $_POST['user_id'] : $_SESSION['user_id'];
@@ -59,34 +62,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en">
 <head>
     <title>Place Order - Coffee</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
-
-    <link rel="stylesheet" href="assets/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/aos.css">
-    <link rel="stylesheet" href="assets/css/ionicons.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="assets/css/jquery.timepicker.css">
-    <link rel="stylesheet" href="assets/css/flaticon.css">
-    <link rel="stylesheet" href="assets/css/icomoon.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .product-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
     <?php require "includes/header.php"; ?>
 
-    <section class="ftco-section">
+    <section class="ftco-section" >
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 ftco-animate">
-                    <form action="#" class="billing-form ftco-bg-dark p-3 p-md-5" method="post">
+                    <form action="#" class="billing-form ftco-bg-dark p-3 p-md-5" style="width: 900px" method="post">
                         <h3 class="mb-4 billing-heading">Place an Order</h3>
                         <?php if (isset($error)): ?>
                             <p class="text-danger text-center"><?php echo $error; ?></p>
@@ -108,15 +100,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Select Products</label>
-                                    <?php foreach ($products as $index => $product): ?>
-                                        <div class="d-flex align-items-center mb-3">
-                                            <input type="checkbox" name="products[]" value="<?php echo $product['product_id']; ?>" class="form-check-input mr-2" id="product_<?php echo $product['product_id']; ?>">
-                                            <label class="form-check-label text-white mr-3" for="product_<?php echo $product['product_id']; ?>">
-                                                <?php echo $product['product_name'] . " - $" . $product['price']; ?>
-                                            </label>
-                                            <input type="number" name="quantities[]" min="0" value="0" class="form-control w-25" placeholder="Qty">
-                                        </div>
-                                    <?php endforeach; ?>
+                                    <table class="table table-dark table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Cheek</th>
+                                                <th scope="col">Product Name</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Image</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($products as $index => $product): ?>
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" name="products[]" value="<?php echo $product['product_id']; ?>" class="form-check-input" id="product_<?php echo $product['product_id']; ?>" <?php echo ($product['product_id'] == $selected_product_id) ? 'checked' : ''; ?>>
+                                                    </td>
+                                                    <td>
+                                                        <label class="form-check-label text-white" for="product_<?php echo $product['product_id']; ?>">
+                                                            <?php echo htmlspecialchars($product['product_name']); ?>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo number_format($product['price'], 2); ?> $
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="quantities[]" min="0" value="<?php echo ($product['product_id'] == $selected_product_id) ? '1' : '0'; ?>" class="form-control" placeholder="Qty" style="width: 150px;">
+                                                    </td>
+                                                    <td>
+                                                        <?php if (!empty($product['product_image']) && file_exists($product['product_image'])): ?>
+                                                            <img src="<?php echo htmlspecialchars($product['product_image']); ?>" class="product-image" alt="Product Image">
+                                                        <?php else: ?>
+                                                            <img src="assets/images/drink-5.jpg" class="product-image" alt="Default Image">
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -135,21 +156,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </section>
 
     <?php require "includes/footer.php"; ?>
-
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/jquery.easing.1.3.js"></script>
-    <script src="assets/js/jquery.waypoints.min.js"></script>
-    <script src="assets/js/jquery.stellar.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/aos.js"></script>
-    <script src="assets/js/jquery.animateNumber.min.js"></script>
-    <script src="assets/js/bootstrap-datepicker.js"></script>
-    <script src="assets/js/jquery.timepicker.min.js"></script>
-    <script src="assets/js/scrollax.min.js"></script>
-    <script src="assets/js/main.js"></script>
 </body>
 </html>
