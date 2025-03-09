@@ -67,6 +67,37 @@ body {
 [tabindex="-1"]:focus {
   outline: 0 !important; }
 
+.search-filter-container {
+    background-color:rgb(0, 0, 0);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.search-input {
+    max-width: 300px;
+    border: gray 2px solid !important;
+    padding: 5px !important;
+    border-radius: 5px !important;
+    color: white;
+    &:focus {
+        border: gold 1px solid !important;
+    }
+}
+.filter-select {
+    max-width: 200px;
+}
+
+select.form-control {
+  background-color: black !important;
+  color: white !important;
+  border-radius: 10px !important;
+  text-align: left !important;
+  
+}
+select.form-control option {
+  background-color: black !important;
+  color: white !important;
+}
 hr {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
@@ -74,8 +105,13 @@ hr {
   overflow: visible; }
 
 h1, h2, h3, h4, h5, h6 {
-  margin-top: 0;
+  margin-top: 120;
   margin-bottom: 0.5rem; }
+
+h2{
+    margin-top: 7rem !important; 
+}
+
 
 p {
   margin-top: 0;
@@ -921,12 +957,17 @@ pre {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 75%;
     flex: 0 0 75%;
-    max-width: 75%; }
+    max-width: 75%; 
+  }
   .col-md-10 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 83.33333%;
     flex: 0 0 83.33333%;
-    max-width: 83.33333%; }
+    /* max-width: 83.33333%; */
+    max-width: 100%;
+
+
+  }
   .col-md-11 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 91.66667%;
@@ -1564,7 +1605,7 @@ pre {
   color: #495057;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #ced4da;
+  border: 1px solid gray;
   border-radius: 0.25rem;
   -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
@@ -8416,8 +8457,8 @@ h1, h2, h3, h4, h5,
   border-radius: 0px;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
-  border: transparent !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  /* border: transparent !important; */
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; */
   padding-right: 0;
   padding-left: 0; }
   .form-control:focus, .form-control:active {

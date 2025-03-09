@@ -29,11 +29,11 @@
     private $conn;
     
     // omar confg
-    /*private $host = "localhost";
-    private $dbname = "cafeteria_db";
-    private $username = "admin";
-    private $password = "123"; 
-    private $conn;*/
+    // private $host = "localhost";
+    // private $dbname = "cafeteria_db";
+    // private $username = "admin";
+    // private $password = "123"; 
+    // private $conn;
 
 
     //yasmeen confg
@@ -48,7 +48,7 @@
         $this->conn = null;
         try {
             $this->conn = new PDO(
-                "mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->dbname,
+                "mysql:host=" . $this->host . ";port=" . $this->port .  ";dbname=" . $this->dbname,
                 $this->username,
                 $this->password
             );
