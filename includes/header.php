@@ -65,9 +65,7 @@ if (session_status() == PHP_SESSION_NONE) {
               <li class="nav-item <?php echo $current_page == 'user.php' ? 'active' : ''; ?>"><a href="user.php" class="nav-link">Users</a></li>
               <li class="nav-item <?php echo $current_page == 'user_order_form.php' ? 'active' : ''; ?>"><a href="user_order_form.php" class="nav-link">order NOW</a></li>
               <li class="nav-item <?php echo $current_page == 'admin_orders.php' ? 'active' : ''; ?>"><a href="admin_orders.php" class="nav-link">Manuel Order</a></li>
-              <li class="nav-item <?php echo $current_page == 'checks.php' ? 'active' : ''; ?>"><a href="checks.php" class="nav-link">Checks</a></li>
-              <li class="nav-item <?php echo $current_page == 'adduser.php' ? 'active' : ''; ?>"><a href="adduser.php" class="nav-link">Add New User</a></li>
-              <?php else: ?>
+              <li class="nav-item <?php echo $current_page == 'checks.php' ? 'active' : ''; ?>"><a href="checks.php" class="nav-link">Checks</a></li>              <?php else: ?>
                 <li class="nav-item <?php echo $current_page == 'index.php' ? 'active' : ''; ?>"><a href="index.php" class="nav-link">Home</a></li>
                 <li class="nav-item <?php echo $current_page == 'user_order_form.php' ? 'active' : ''; ?>"><a href="user_order_form.php" class="nav-link">order NOW</a></li>
                 <li class="nav-item <?php echo $current_page == 'user_orders.php' ? 'active' : ''; ?>"><a href="user_orders.php" class="nav-link">My Orders</a></li>
