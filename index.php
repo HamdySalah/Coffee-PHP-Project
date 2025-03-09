@@ -27,10 +27,10 @@ $total_products = count($db->fetchAllProducts());
           <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
             <div class="col-md-8 col-sm-12 text-center ftco-animate">
-            	<span class="subheading">Welcome </span> <?php echo $_SESSION['user_name']; ?>
+            	<span class="subheading">Welcome </span> <span style="font-weight: bold; color: gold;"><?php echo $_SESSION['user_name']; ?></span>
               <h1 class="mb-4">The Best Coffee Testing Experience</h1>
               <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              <p><a href="user_order_form.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
+              <p><a href="user_order_form.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="product.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
             </div>
           </div>
         </div>
@@ -42,10 +42,10 @@ $total_products = count($db->fetchAllProducts());
           <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
             <div class="col-md-8 col-sm-12 text-center ftco-animate">
-            	<span class="subheading">Welcome</span>
+            	<span class="subheading">Welcome</span> <span style="font-weight: bold; color: gold;"><?php echo $_SESSION['user_name']; ?></span>
               <h1 class="mb-4">Amazing Taste &amp; Beautiful Place</h1>
               <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              <p><a href="user_order_form.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
+              <p><a href="user_order_form.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="product.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
             </div>
 
           </div>
@@ -58,10 +58,10 @@ $total_products = count($db->fetchAllProducts());
           <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
             <div class="col-md-8 col-sm-12 text-center ftco-animate">
-            	<span class="subheading">Welcome</span>
+            	<span class="subheading">Welcome</span><span style="font-weight: bold; color: gold;"><?php echo $_SESSION['user_name']; ?></span>
               <h1 class="mb-4">Creamy Hot and Ready to Serve</h1>
               <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              <p><a href="user_order_form.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
+              <p><a href="user_order_form.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="product.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
             </div>
 
           </div>
@@ -84,7 +84,7 @@ $total_products = count($db->fetchAllProducts());
     				<div class="row">
     					<div class="col-md-6">
     						<div class="menu-entry">
-		    					<a href="#" class="img" style="background-image: url(assets/images/menu-1.jpg);"></a>
+		    					<a href="" class="img" style="background-image: url(assets/images/menu-1.jpg);"></a>
 		    				</div>
     					</div>
     					<div class="col-md-6">
