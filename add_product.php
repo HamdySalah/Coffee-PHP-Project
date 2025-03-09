@@ -32,11 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (!file_exists($target_dir)) {
                 mkdir($target_dir, 0777, true);
             }
-            
+            if ($_FILES["profile_picture"]["size"] > 2 * 1024 * 1024) {
+                die("File is too large. Max size is 2MB.");
+            }
             $imageFileType = strtolower(pathinfo($_FILES["product_picture"]["name"], PATHINFO_EXTENSION));
             // Generate unique filename to avoid overwrites
             $new_filename = $target_dir . $name . '_' . uniqid() . '.' . $imageFileType;
-            
+
             // Validate image
             $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
             if (in_array($imageFileType, $allowed_types) && getimagesize($_FILES["product_picture"]["tmp_name"])) {

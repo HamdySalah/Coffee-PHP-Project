@@ -38,6 +38,7 @@ $query .= " ORDER BY p.product_id DESC";
 $stmt = $conn->prepare($query);
 $stmt->execute($params);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -77,9 +78,9 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php require "includes/header.php"; ?>
 <div class="container mt-5">
     <h2>Products</h2>
+    <?php if($_SESSION['role'] == 1): ?>
     <a href="add_product.php" class="btn btn-success mb-3">Add New Product</a>
-
-    <!-- Search and Filter Form -->
+    <?php endif; ?>
     <div class="search-filter-container">
         <form method="GET" class="row g-3 align-items-end">
             <div class="col-auto">
@@ -127,9 +128,12 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <p class="card-text" style="color: <?php echo ($product['status'] === 'available' ? 'green' : 'red'); ?>">
                                 Status: <?php echo htmlspecialchars($product['status']); ?>
                             </p>
+                            <?php if($_SESSION['role'] == 1): ?>
                             <a href="edit_product.php?id=<?php echo $product['product_id']; ?>" class="btn btn-warning">Edit</a>
                             <a href="delete_product.php?id=<?php echo $product['product_id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
-                          <br>  <a href="user_order_form.php?id=<?php echo $product['product_id']; ?>" class="btn btn-primary">Order Now</a>
+                            <?php endif; ?>
+                            <br>  
+                            <a href="user_order_form.php?id=<?php echo $product['product_id']; ?>" class="btn btn-primary">Order Now</a>
                         </div>
                     </div>
                 </div>

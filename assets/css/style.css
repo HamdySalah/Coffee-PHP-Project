@@ -3221,6 +3221,8 @@ input[type="button"].btn-block {
   list-style: none; }
 
 .nav-link {
+  font-size: 30px;
+  color: #ffb043;
   display: block;
   padding: 0.5rem 1rem; }
   .nav-link:hover, .nav-link:focus {
@@ -7636,8 +7638,8 @@ h1, h2, h3, h4, h5,
             text-align: center; } }
         .owl-carousel.home-slider .slider-item .slider-text .subheading {
           font-family: "Great Vibes", cursive;
-          font-size: 30px;
-          color: #c49b63; }
+          font-size: 70px;
+          color: #ffb043; }
         .owl-carousel.home-slider .slider-item .slider-text h1 {
           text-transform: uppercase;
           font-size: 40px;

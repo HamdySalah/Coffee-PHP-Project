@@ -31,7 +31,7 @@ if (session_status() == PHP_SESSION_NONE) {
       .navbar-nav {
         margin: 0 auto;
       }
-      .user-profile {
+      .user-profile {        
         display: flex;
         align-items: center;
       }
@@ -63,11 +63,10 @@ if (session_status() == PHP_SESSION_NONE) {
               <li class="nav-item <?php echo $current_page == 'index.php' ? 'active' : ''; ?>"><a href="index.php" class="nav-link">Home</a></li>
               <li class="nav-item <?php echo $current_page == 'product.php' ? 'active' : ''; ?>"><a href="product.php" class="nav-link">Products</a></li>
               <li class="nav-item <?php echo $current_page == 'user.php' ? 'active' : ''; ?>"><a href="user.php" class="nav-link">Users</a></li>
-              <li class="nav-item <?php echo $current_page == 'user_order_form.php' ? 'active' : ''; ?>"><a href="user_order_form.php" class="nav-link">order NOW</a></li>
               <li class="nav-item <?php echo $current_page == 'admin_orders.php' ? 'active' : ''; ?>"><a href="admin_orders.php" class="nav-link">Manuel Order</a></li>
-              <li class="nav-item <?php echo $current_page == 'checks.php' ? 'active' : ''; ?>"><a href="checks.php" class="nav-link">Checks</a></li>              <?php else: ?>
+              <li class="nav-item <?php echo $current_page == 'checks.php' ? 'active' : ''; ?>"><a href="checks.php" class="nav-link">Checks</a></li>
+              <?php else: ?>
                 <li class="nav-item <?php echo $current_page == 'index.php' ? 'active' : ''; ?>"><a href="index.php" class="nav-link">Home</a></li>
-                <li class="nav-item <?php echo $current_page == 'user_order_form.php' ? 'active' : ''; ?>"><a href="user_order_form.php" class="nav-link">order NOW</a></li>
                 <li class="nav-item <?php echo $current_page == 'user_orders.php' ? 'active' : ''; ?>"><a href="user_orders.php" class="nav-link">My Orders</a></li>
                 <li class="nav-item <?php echo $current_page == 'about.php' ? 'active' : ''; ?>"><a href="about.php" class="nav-link">About</a></li>
               <?php endif; ?>
@@ -75,7 +74,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <div class="user-profile">
               <img src="uploads/pic3.jpg" alt="User Profile Picture">
               <div class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a style="font-family: 'Great Vibes', cursive;" class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <?php echo $_SESSION['user_name']; ?>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="userDropdown">

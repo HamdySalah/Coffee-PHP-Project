@@ -30,7 +30,7 @@ $db = new Database();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Include validation logic
     include 'validate.php';
-
+    
     if (empty($error)) {
         // Insert user if no errors
         $db->insertUser($name, $email, $password, $room, $ext);

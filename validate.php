@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $room = htmlspecialchars($_POST["room"]);
     $ext = htmlspecialchars($_POST["ext"]);
 
+    
     $db = new Database();
     if (empty($name)) {
         $error .= "Name is required.<br>";
