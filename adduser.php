@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             $profile_picture = $upload_dir . uniqid() . '-' . basename($_FILES['pic']['name']);
             if (move_uploaded_file($_FILES['pic']['tmp_name'], $profile_picture)) {
-                echo "File uploaded successfully to: " . $profile_picture; // Debug
+                echo "File uploaded successfully to: " . $profile_picture;
             } else {
                 $error = "Failed to move uploaded file.";
             }

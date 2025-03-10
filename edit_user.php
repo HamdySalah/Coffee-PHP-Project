@@ -12,11 +12,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $db = new Config();
         $conn = $db->connect();
 
-        $stmt = $conn->prepare("UPDATE User SET user_name = :user_name, email = :email, ext = :ext WHERE user_id = :user_id");
+        $stmt = $conn->prepare("UPDATE User SET user_name = :user_name, email = :email, ext = :ext, profile_picture = :profile_picture WHERE user_id = :user_id");
         $stmt->bindParam(':user_name', $_POST['user_name']);
         $stmt->bindParam(':email', $_POST['email']);
         $stmt->bindParam(':ext', $_POST['ext']);
         $stmt->bindParam(':user_id', $_POST['user_id']);
+
+        // Handle image upload
+        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+            $imagePath = 'uploads/' . basename($_FILES['image']['name']);
+            move_uploaded_file($_FILES['image']['tmp_name'], $imagePath);
+            $stmt->bindParam(':profile_picture', $imagePath);
+        } else {
+            $stmt->bindParam(':profile_picture', $_POST['current_image']);
+        }
+
         $stmt->execute();
 
         header("Location: user.php");
@@ -54,8 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php require "includes/header.php"; ?>
     <div class="container">
         <h3 class="mb-4">Edit User</h3>
-        <form method="POST" action="edit_user.php">
+        <?php if ($user): ?>
+        <form method="POST" action="edit_user.php" enctype="multipart/form-data">
             <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['user_id']); ?>">
+            <input type="hidden" name="current_image" value="<?php echo htmlspecialchars($user['profile_picture']); ?>">
             <div class="form-group">
                 <label for="user_name">User Name</label>
                 <input type="text" class="form-control" id="user_name" name="user_name" value="<?php echo htmlspecialchars($user['user_name']); ?>" required>
@@ -68,8 +80,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="ext">EXT</label>
                 <input type="text" class="form-control" id="ext" name="ext" value="<?php echo htmlspecialchars($user['ext']); ?>">
             </div>
+            <div class="form-group">
+                <label for="image">Profile Image</label>
+                <input type="file" class="form-control" id="image" name="image">
+                <?php if ($user['profile_picture']): ?>
+                    <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="Profile Image" width="100">
+                <?php endif; ?>
+            </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
+        <?php else: ?>
+            <p>User not found.</p>
+        <?php endif; ?>
     </div>
     <?php require "includes/footer.php"; ?>
 </body>
