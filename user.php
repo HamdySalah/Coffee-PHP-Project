@@ -102,6 +102,8 @@ try {
                                             <p class="card-text"><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
                                             <p class="card-text"><strong>Rooms:</strong> <?php echo htmlspecialchars($user['rooms'] ?: 'None'); ?></p>
                                             <p class="card-text"><strong>EXT:</strong> <?php echo htmlspecialchars($user['ext'] ?: 'N/A'); ?></p>
+                                            <a href="edit_user.php?id=<?php echo $user['user_id']; ?>" class="btn btn-warning">Update</a>
+                                            <a href="delete_user.php?id=<?php echo $user['user_id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
                                         </div>
                                     </div>
                                 </div>
