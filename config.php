@@ -36,11 +36,11 @@
     private $conn;
     
     // omar confg
-    private $host = "localhost";
-    private $dbname = "cafeteria_db";
-    private $username = "admin";
-    private $password = "123"; 
-    private $conn;
+    // private $host = "localhost";
+    // private $dbname = "cafeteria_db";
+    // private $username = "admin";
+    // private $password = "123"; 
+    // private $conn;
 
 
     //yasmeen confg

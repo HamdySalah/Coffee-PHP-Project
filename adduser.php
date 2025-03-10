@@ -3,12 +3,6 @@ session_start();
 require_once 'config.php';
 require_once 'Database.php';
 
-define('UPLOAD_DIR', 'uploads/');
-define('ALLOWED_FILE_TYPES', ['image/jpeg', 'image/png', 'image/gif']);
-define('MAX_FILE_SIZE', 2 * 1024 * 1024);
-define('SITE_NAME', 'Coffee-PHP-Project');
-define('BASE_URL', 'http://localhost/Coffee-PHP-Project/');
-
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: login.php");
     exit();

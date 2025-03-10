@@ -6,12 +6,6 @@ error_reporting(E_ALL);
 session_start();
 require_once 'config.php';
 
-define('UPLOAD_DIR', 'uploads/');
-define('ALLOWED_FILE_TYPES', ['image/jpeg', 'image/png', 'image/gif']);
-define('MAX_FILE_SIZE', 2 * 1024 * 1024);
-define('SITE_NAME', 'Coffee-PHP-Project');
-define('BASE_URL', 'http://localhost/Coffee-PHP-Project/');
-
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: login.php");
     exit();
@@ -37,8 +31,6 @@ try {
     die("General Error: " . $e->getMessage());
 }
 
-// Base path for images (adjust if not in /php_project/)
-$base_path = '/php_project/'; // Set to '' if at web root (e.g., /var/www/html/)
 ?>
 
 <!DOCTYPE html>
@@ -100,9 +92,9 @@ $base_path = '/php_project/'; // Set to '' if at web root (e.g., /var/www/html/)
                                         $profile_picture = $user['profile_picture'];
                                         $absolute_path = realpath(dirname(__FILE__)) . '/' . $profile_picture;
                                         if ($profile_picture && file_exists($absolute_path)): ?>
-                                            <img src="<?php echo htmlspecialchars($base_path . $profile_picture); ?>" alt="<?php echo htmlspecialchars($user['user_name']); ?>">
+                                            <img src="<?php echo htmlspecialchars(BASE_URL . $profile_picture); ?>" alt="<?php echo htmlspecialchars($user['user_name']); ?>">
                                         <?php else: ?>
-                                            <img src="uploads/users/img_avatar.png" alt="Default User">
+                                            <img src="<?php echo BASE_URL; ?>uploads/users/img_avatar.png" alt="Default User">
                                         <?php endif; ?>
                                         <div class="card-body">
                                             <h5 class="card-title"><?php echo htmlspecialchars($user['user_name']); ?></h5>
