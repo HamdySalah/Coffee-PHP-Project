@@ -60,13 +60,16 @@ $total_price_all = array_sum(array_column($checks, 'total_price'));
 
 // Fetch revenue breakdown by product (unchanged)
 $revenue_stmt = $conn->prepare("
-    SELECT p.product_name, SUM(op.quntity) AS total_sold, SUM(op.quntity * p.price) AS revenue
+    SELECT p.product_name, 
+           SUM(op.quntity) AS total_sold, 
+           SUM(op.quntity * p.price) AS revenue,
+           p.remaining_quantity
     FROM Orders o
     JOIN User u ON o.f_user_id = u.user_id
     LEFT JOIN Order_product op ON o.order_id = op.f_order_id
     LEFT JOIN Product p ON op.f_product_id = p.product_id
     $where_clause
-    GROUP BY p.product_name
+    GROUP BY p.product_name, p.remaining_quantity
     HAVING total_sold > 0
     ORDER BY total_sold DESC
 ");
@@ -193,6 +196,7 @@ $revenue_breakdown = $revenue_stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <th>Product Name</th>
                                         <th>Total Sold</th>
                                         <th>Revenue</th>
+                                        <th>Remaining Quantity</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -201,6 +205,7 @@ $revenue_breakdown = $revenue_stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <td><?php echo $revenue['product_name']; ?></td>
                                             <td><?php echo $revenue['total_sold']; ?></td>
                                             <td>$<?php echo number_format($revenue['revenue'], 2); ?></td>
+                                            <td><?php echo $revenue['remaining_quantity']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

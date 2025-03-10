@@ -6,19 +6,19 @@
     // define('BASE_URL', 'http://localhost/Coffee-PHP-Project/');
     class Config {
     #General Config To Remote DB for All Developers
-    // private $host = "nozomi.proxy.rlwy.net";
-    // private $dbname = "railway";
-    // private $username = "root";
-    // private $password = "hZhDzuMNFzuSYMkzkNkYTRjetBvRElRd"; 
-    // private $port = "51811";
-    // private $conn;
+    private $host = "nozomi.proxy.rlwy.net";
+    private $dbname = "railway";
+    private $username = "root";
+    private $password = "hZhDzuMNFzuSYMkzkNkYTRjetBvRElRd"; 
+    private $port = "51811";
+    private $conn;
 
     #Mostafa Config
-    private $host = "localhost";
-    private $dbname = "Cafeteria";
-    private $username = "root";
-    private $password = "123456Mh*"; 
-    private $conn;      
+    // private $host = "localhost";
+    // private $dbname = "Cafeteria";
+    // private $username = "root";
+    // private $password = "123456Mh*"; 
+    // private $conn;      
     
     # Hamdy Config
     // private $host = "localhost";
@@ -48,7 +48,7 @@
         $this->conn = null;
         try {
             $this->conn = new PDO(
-                "mysql:host=" . $this->host .  ";dbname=" . $this->dbname,
+                "mysql:host=" . $this->host . ";port=".$this->port . ";dbname=" . $this->dbname,
                 $this->username,
                 $this->password
             );

@@ -41,6 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt = $conn->prepare("INSERT INTO Order_product (f_order_id, f_product_id, quntity) VALUES (:order_id, :product_id, :quantity)");
                 $stmt->execute(['order_id' => $order_id, 'product_id' => $product_id, 'quantity' => $quantity]);
                 $inserted_products++;
+                //
+                $update_quantity_stmt = $conn->prepare("
+                UPDATE Product
+                SET remaining_quantity = remaining_quantity - :quantity_sold
+                WHERE product_id = :product_id
+            ");
+            $update_quantity_stmt->execute([
+                ':quantity_sold' => $quantity,
+                ':product_id' => $product_id
+            ]);
             }
 
             if ($inserted_products > 0) {
@@ -60,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Place Order - Coffee</title>
     <style>
@@ -71,10 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
 </head>
+
 <body>
     <?php require "includes/header.php"; ?>
 
-    <section class="ftco-section" >
+    <section class="ftco-section">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 ftco-animate">
@@ -157,4 +169,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <?php require "includes/footer.php"; ?>
 </body>
+
 </html>
