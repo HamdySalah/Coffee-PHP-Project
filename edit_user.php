@@ -63,15 +63,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .form-control{
             padding-left: 15px !important;
         }
-        .mb-4, .my-4 {
+        /* .mb-4, .my-4 {
          margin-top: 7.5rem !important;
-        }
+        } */
     </style>
 </head>
 <body>
     <?php require "includes/header.php"; ?>
     <div class="container">
-        <h3 class="mb-4">Edit User</h3>
+        <h3 class="mb-4" style="margin-top:7.5rem !important;" >Edit User</h3>
         <?php if ($user): ?>
         <form method="POST" action="edit_user.php" enctype="multipart/form-data">
             <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['user_id']); ?>">

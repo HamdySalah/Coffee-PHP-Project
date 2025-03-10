@@ -79,6 +79,12 @@ try {
         strong{
             color :gray;
         }
+        i{
+            z-index: 11;
+            top: 9px;
+            right: 27px;
+            font-size: 25px;
+        }
         
     </style>
 </head>
@@ -90,8 +96,11 @@ try {
             <div class="row justify-content-center">
                 <div class="col-md-12 ftco-animate">
                     <h3 class="mb-4 billing-heading text-center">All Users</h3>
-                    <input   style="margin-bottom: 35px"; type="text" id="searchInput" class="form-control mb-4" placeholder="Search by name...">
-                    <?php if (empty($users)): ?>
+                    <div class="position-relative">
+                    <input type="text" id="searchInput" class="form-control mb-4 pe-5" placeholder="Search by name..." style="margin-bottom: 35px;">
+                    <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3 text-white" style="color:white"></i>
+                    </div>                    
+                <?php if (empty($users)): ?>
                         <p class="text-center text-white">No users found.</p>
                     <?php else: ?>
                         <div class="row" id="userList">
