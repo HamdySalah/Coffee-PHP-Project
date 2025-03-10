@@ -64,6 +64,31 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .btn.btn-primary{
             margin-top: 5px;
         }
+
+        .pro-card {
+            background: #1a1a1a !important;
+            color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            
+        }
+        .pro-card .card-title {
+
+        font-size: 1.9rem;
+        margin-bottom: 8px;
+        margin-top: 18px;
+        color: gold;
+        font-weight: bold;
+}
+
+
+        .pro-card:hover {
+            transform: translateY(-10px);
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -104,7 +129,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php else: ?>
             <?php foreach ($products as $product): ?>
                 <div class="col-md-3 mb-3">
-                    <div class="card">
+                    <div class="card pro-card">
                         <?php if (!empty($product['product_image']) && file_exists($product['product_image'])): ?>
                             <img src="<?php echo htmlspecialchars($product['product_image']); ?>" class="card-img-top" alt="Product Image">
                         <?php else: ?>
@@ -114,10 +139,10 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <h5 class="card-title">
                                 <strong><?php echo htmlspecialchars($product['product_name']); ?></strong>
                             </h5>
-                            <p class="card-text"><small style="color: gray;">Category:
+                            <p class="card-text"><small style="color: #cec3c3;">Category:
                                 <?php echo htmlspecialchars($product['category_name']); ?></small></p>
                             <h6 class="card-text">Price: <strong><?php echo number_format($product['price'], 2); ?> $</strong></h6>
-                            <p class="card-text" style="color: <?php echo ($product['status'] === 'available' ? 'green' : 'red'); ?>">
+                            <p class="card-text" style="color: <?php echo ($product['status'] === 'available' ? '#40e540' : 'red'); ?>">
                                 Status: <?php echo htmlspecialchars($product['status']); ?>
                             </p>
                             <?php if($_SESSION['role'] == 1): ?>
