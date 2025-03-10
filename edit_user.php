@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         .mb-4, .my-4 {
          margin-top: 7.5rem !important;
-}
+        }
     </style>
 </head>
 <body>

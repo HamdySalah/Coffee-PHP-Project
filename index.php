@@ -20,6 +20,11 @@ $total_admin = count(array_filter($db->fetchAllUsers(), function($user) {
 }));
 $total_products = count($db->fetchAllProducts());
 ?>
+	<style>
+		.mb-4, .my-4 {
+  margin-top: 1.5rem !important;
+}
+	</style>
     <section class="home-slider owl-carousel">
       <div class="slider-item" style="background-image: url(assets/images/bg_1.jpg);">
       	<div class="overlay"></div>
@@ -28,7 +33,7 @@ $total_products = count($db->fetchAllProducts());
 
             <div class="col-md-8 col-sm-12 text-center ftco-animate">
             	<span class="subheading">Welcome  </span> <span class="subheading"><?php echo $_SESSION['user_name']; ?></span>
-              <h1 class="mb-4">The Best Coffee Testing Experience</h1>
+              <h1 class="mb-4 my-4">The Best Coffee Testing Experience</h1>
               <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
               <p><a href="user_order_form.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="product.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
             </div>

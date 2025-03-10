@@ -90,12 +90,13 @@ try {
             <div class="row justify-content-center">
                 <div class="col-md-12 ftco-animate">
                     <h3 class="mb-4 billing-heading text-center">All Users</h3>
+                    <input   style="margin-bottom: 35px"; type="text" id="searchInput" class="form-control mb-4" placeholder="Search by name...">
                     <?php if (empty($users)): ?>
                         <p class="text-center text-white">No users found.</p>
                     <?php else: ?>
-                        <div class="row">
+                        <div class="row" id="userList">
                             <?php foreach ($users as $user): ?>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3 mb-3 user-card-container">
                                     <div class="user-card">
                                         <?php
                                         $profile_picture = $user['profile_picture'];
@@ -130,5 +131,20 @@ try {
 
     <?php require "includes/footer.php"; ?>
 
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            var searchValue = this.value.toLowerCase();
+            var userCards = document.querySelectorAll('.user-card-container');
+
+            userCards.forEach(function(card) {
+                var userName = card.querySelector('.card-title').textContent.toLowerCase();
+                if (userName.includes(searchValue)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -63,6 +63,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .card-img-top { object-fit: cover; height: 200px; }
         .btn.btn-primary{
             margin-top: 5px;
+            /* background: #e9e054 !important; */
         }
 
         .pro-card {
@@ -151,7 +152,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <?php endif; ?>
                             <?php if($product['status'] === 'available'): ?>
                             <br>  
-                            <a href="user_order_form.php?id=<?php echo $product['product_id']; ?>" class="btn btn-primary">Order Now</a>
+                            <a href="addorder.php?id=<?php echo $product['product_id']; ?>" class="btn btn-primary">Order Now</a>
                             <?php else: ?>
                             <br>
                             <button class="btn btn-secondary" style="margin-top: 6px;" disabled>Unavailable</button>
