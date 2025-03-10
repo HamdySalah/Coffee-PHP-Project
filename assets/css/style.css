@@ -6213,7 +6213,7 @@ button.bg-dark:focus {
 
 .mt-4,
 .my-4 {
-  margin-top: 1.5rem !important; }
+  margin-top: 7.5rem !important; }
 
 .mr-4,
 .mx-4 {
@@ -6221,7 +6221,7 @@ button.bg-dark:focus {
 
 .mb-4,
 .my-4 {
-  margin-bottom: 1.5rem !important; }
+  margin-top: 7.5rem !important; }
 
 .ml-4,
 .mx-4 {
@@ -8474,7 +8474,8 @@ h1, h2, h3, h4, h5,
   /* border: transparent !important; */
   /* border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; */
   padding-right: 0;
-  padding-left: 0; }
+  /* padding-left: 15px;  */
+}
   .form-control:focus, .form-control:active {
     border-color: #c49b63; }
 

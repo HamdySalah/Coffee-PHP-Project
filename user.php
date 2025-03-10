@@ -42,6 +42,9 @@ try {
 
     
     <style>
+        h5{
+            line-height: 4rem;
+        }
         .user-card {
             background: #1a1a1a;
             color: #fff;
@@ -61,8 +64,12 @@ try {
             padding: 20px;
         }
         .user-card .card-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+
+            font-size: 1.9rem;
+            margin-bottom: 8px;
+            margin-top: 18px;
+            color: gold;
+            font-weight: bold;
         }
         .user-card .card-text {
             margin-bottom: 5px;
@@ -71,6 +78,10 @@ try {
             color: #f8d7da;
             font-size: 0.9rem;
         }
+        strong{
+            color :gray;
+        }
+        
     </style>
 </head>
 <?php require "includes/header.php"; ?>
@@ -86,7 +97,7 @@ try {
                     <?php else: ?>
                         <div class="row">
                             <?php foreach ($users as $user): ?>
-                                <div class="col-md-4 mb-4">
+                                <div class="col-md-3 mb-3">
                                     <div class="user-card">
                                         <?php
                                         $profile_picture = $user['profile_picture'];

@@ -59,6 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Edit User - Coffee</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        .form-control{
+            padding-left: 15px !important;
+        }
+        .mb-4, .my-4 {
+         margin-top: 7.5rem !important;
+}
+    </style>
 </head>
 <body>
     <?php require "includes/header.php"; ?>
