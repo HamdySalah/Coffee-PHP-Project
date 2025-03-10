@@ -1,9 +1,9 @@
 <?php
-    define('UPLOAD_DIR', 'uploads/');
-    define('ALLOWED_FILE_TYPES', ['image/jpeg', 'image/png', 'image/gif']);
-    define('MAX_FILE_SIZE', 2 * 1024 * 1024);
-    define('SITE_NAME', 'Coffee-PHP-Project');
-    define('BASE_URL', 'http://localhost/Coffee-PHP-Project/');
+    // define('UPLOAD_DIR', 'uploads/');
+    // define('ALLOWED_FILE_TYPES', ['image/jpeg', 'image/png', 'image/gif']);
+    // define('MAX_FILE_SIZE', 2 * 1024 * 1024);
+    // define('SITE_NAME', 'Coffee-PHP-Project');
+    // define('BASE_URL', 'http://localhost/Coffee-PHP-Project/');
     class Config {
     #General Config To Remote DB for All Developers
     // private $host = "nozomi.proxy.rlwy.net";
@@ -14,11 +14,11 @@
     // private $conn;
 
     #Mostafa Config
-    // private $host = "localhost";
-    // private $dbname = "Cafeteria";
-    // private $username = "root";
-    // private $password = "123456Mh*"; 
-    // private $conn;      
+    private $host = "localhost";
+    private $dbname = "Cafeteria";
+    private $username = "root";
+    private $password = "123456Mh*"; 
+    private $conn;      
     
     # Hamdy Config
     // private $host = "localhost";
@@ -29,11 +29,11 @@
     // private $conn;
     
     // omar confg
-    private $host = "localhost";
-    private $dbname = "cafeteria_db";
-    private $username = "admin";
-    private $password = "123"; 
-    private $conn;
+    // private $host = "localhost";
+    // private $dbname = "cafeteria_db";
+    // private $username = "admin";
+    // private $password = "123"; 
+    // private $conn;
 
 
     //yasmeen confg
@@ -60,3 +60,4 @@
     }
 }
 ?>
+
