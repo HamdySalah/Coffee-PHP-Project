@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
 }
 
 $db = new Database();
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['username'];
     $email = $_POST['email'];
@@ -31,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             $profile_picture = $upload_dir . uniqid() . '-' . basename($_FILES['pic']['name']);
             if (move_uploaded_file($_FILES['pic']['tmp_name'], $profile_picture)) {
+                $_SESSION['profile_picture'] = $profile_picture; // Store image in session
                 echo "File uploaded successfully to: " . $profile_picture;
             } else {
                 $error = "Failed to move uploaded file.";

@@ -5,12 +5,10 @@ error_reporting(E_ALL);
 
 session_start();
 require_once 'config.php';
-
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: login.php");
     exit();
 }
-
 try {
     $db = new Config();
     $conn = $db->connect();
@@ -94,7 +92,7 @@ try {
                                         if ($profile_picture && file_exists($absolute_path)): ?>
                                             <img src="<?php echo htmlspecialchars(BASE_URL . $profile_picture); ?>" alt="<?php echo htmlspecialchars($user['user_name']); ?>">
                                         <?php else: ?>
-                                            <img src="<?php echo BASE_URL; ?>uploads/users/img_avatar.png" alt="Default User">
+                                            <img src="<?php echo BASE_URL; ?>uploads/img_avatar.png" alt="Default User">
                                         <?php endif; ?>
                                         <div class="card-body">
                                             <h5 class="card-title"><?php echo htmlspecialchars($user['user_name']); ?></h5>

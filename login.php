@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['role'] = $user['role'];
         $_SESSION['user_name'] = $user['user_name'];
+        $_SESSION['profile_picture'] = $user['profile_picture'];
         header("Location: index.php");
         exit();
     }

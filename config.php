@@ -19,13 +19,7 @@
     // private $username = "root";
     // private $password = "123456Mh*"; 
     // private $conn;      
-    
-    # Hamdy Config
-    // private $host = "localhost";
-    // private $dbname = "Cafeteria";
-    // private $username = "root";
-    // private $password = "123456Mh*"; 
-    // private $conn;      
+         
     
     # Hamdy Config
     private $host = "localhost";
