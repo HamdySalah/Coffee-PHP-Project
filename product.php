@@ -108,7 +108,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php if (!empty($product['product_image']) && file_exists($product['product_image'])): ?>
                             <img src="<?php echo htmlspecialchars($product['product_image']); ?>" class="card-img-top" alt="Product Image">
                         <?php else: ?>
-                            <img src="assets/images/drink-5.jpg" class="card-img-top" alt="Default Image">
+                            <img src="uploads/product/non.png" class="card-img-top" alt="Default Image">
                         <?php endif; ?>
                         <div class="card-body">
                             <h5 class="card-title">

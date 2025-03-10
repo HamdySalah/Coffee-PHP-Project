@@ -48,6 +48,7 @@ $base_path = '/php_project/'; // Set to '' if at web root (e.g., /var/www/html/)
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    
     <style>
         .user-card {
             background: #1a1a1a;
@@ -80,8 +81,8 @@ $base_path = '/php_project/'; // Set to '' if at web root (e.g., /var/www/html/)
         }
     </style>
 </head>
+<?php require "includes/header.php"; ?>
 <body>
-    <?php require "includes/header.php"; ?>
 
     <section class="ftco-section">
         <div class="container">
@@ -101,8 +102,7 @@ $base_path = '/php_project/'; // Set to '' if at web root (e.g., /var/www/html/)
                                         if ($profile_picture && file_exists($absolute_path)): ?>
                                             <img src="<?php echo htmlspecialchars($base_path . $profile_picture); ?>" alt="<?php echo htmlspecialchars($user['user_name']); ?>">
                                         <?php else: ?>
-                                            <img src="assets/images/default-user.jpg" alt="Default User">
-                                            <p class="debug">Profile Picture: <?php echo htmlspecialchars($profile_picture ?: 'None'); ?> - Exists: <?php echo file_exists($absolute_path) ? 'Yes' : 'No'; ?></p>
+                                            <img src="uploads/users/img_avatar.png" alt="Default User">
                                         <?php endif; ?>
                                         <div class="card-body">
                                             <h5 class="card-title"><?php echo htmlspecialchars($user['user_name']); ?></h5>
