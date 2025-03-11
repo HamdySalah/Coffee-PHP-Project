@@ -87,7 +87,8 @@ $total_revenue = array_sum(array_column($orders, 'total_price'));
     <link rel="stylesheet" href="assets/css/icomoon.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        .status-overdue { background-color: #f8d7da; color:rgb(250, 102, 117); }
+        .status-overdue { color:rgb(250, 102, 117);}
+        .status-done {  color:rgb(40, 167, 69);}
     </style>
 </head>
 <body>
@@ -154,7 +155,7 @@ $total_revenue = array_sum(array_column($orders, 'total_price'));
                                         $order_age = (strtotime('now') - strtotime($order['order_date'])) / (60 * 60); // Hours
                                         $display_status = ($order['status'] == 'Processing' && $order_age > 24) ? 'Canceled' : $order['status'];
                                         ?>
-                                        <tr <?php echo $display_status == 'Canceled' ? 'class="status-overdue"' : ''; ?>>
+                                        <tr <?php echo $display_status == 'Canceled' ? 'class="status-overdue"' : ''; echo $display_status == 'Done' ? 'class="status-done"' : ''; ?>>
                                             <td><?php echo $order['order_id']; ?></td>
                                             <td><?php echo date('Y-m-d H:i', strtotime($order['order_date'])); ?></td>
                                             <td><?php echo $order['user_name']; ?></td>

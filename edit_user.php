@@ -29,6 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $stmt->execute();
 
+        // Update user rooms
+        $stmt = $conn->prepare("DELETE FROM user_room WHERE user_id = :user_id");
+        $stmt->bindParam(':user_id', $_POST['user_id']);
+        $stmt->execute();
+
+        if (!empty($_POST['rooms'])) {
+            $stmt = $conn->prepare("INSERT INTO user_room (user_id, room_name) VALUES (:user_id, :room_name)");
+            foreach ($_POST['rooms'] as $room) {
+                $stmt->bindParam(':user_id', $_POST['user_id']);
+                $stmt->bindParam(':room_name', $room);
+                $stmt->execute();
+            }
+        }
+
         header("Location: user.php");
         exit();
     } catch (PDOException $e) {
@@ -45,6 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':user_id', $_GET['id']);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $stmt = $conn->prepare("SELECT room_name FROM user_room WHERE user_id = :user_id");
+        $stmt->bindParam(':user_id', $_GET['id']);
+        $stmt->execute();
+        $user_rooms = $stmt->fetchAll(PDO::FETCH_COLUMN);
     } catch (PDOException $e) {
         die("Database Error: " . $e->getMessage());
     } catch (Exception $e) {
@@ -87,6 +106,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-group">
                 <label for="ext">EXT</label>
                 <input type="text" class="form-control" id="ext" name="ext" value="<?php echo htmlspecialchars($user['ext']); ?>">
+            </div>
+            <div class="form-group">
+                <label for="rooms">Rooms</label>
+                <select class="form-control" id="rooms" name="rooms[]">
+                    <?php
+                    $stmt = $conn->prepare("SELECT DISTINCT room_name FROM user_room");
+                    $stmt->execute();
+                    $rooms = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                    foreach ($rooms as $room): ?>
+                        <option value="<?php echo htmlspecialchars($room); ?>" <?php echo in_array($room, $user_rooms) ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($room); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
             </div>
             <div class="form-group">
                 <label for="image">Profile Image</label>
