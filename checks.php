@@ -12,28 +12,20 @@ $db = new Database();
 $conn = $db->connect();
 
 // Build dynamic WHERE clause for filters
-$where_clause = "";
+$where_clause = " WHERE o.status = 'Done'";
 $params = [];
 $filters_applied = false;
 
 if (isset($_GET['filter_date']) && !empty($_GET['filter_date'])) {
-    $where_clause .= " WHERE DATE(o.order_date) = :filter_date";
+    $where_clause .= " AND DATE(o.order_date) = :filter_date";
     $params[':filter_date'] = $_GET['filter_date'];
     $filters_applied = true;
 }
 
 if (isset($_GET['filter_user']) && !empty($_GET['filter_user'])) {
-    $where_clause .= $filters_applied ? " AND" : " WHERE";
-    $where_clause .= " (u.user_name LIKE :filter_user OR u.user_id = :filter_user_id)";
+    $where_clause .= " AND (u.user_name LIKE :filter_user OR u.user_id = :filter_user_id)";
     $params[':filter_user'] = "%" . $_GET['filter_user'] . "%";
     $params[':filter_user_id'] = (int)$_GET['filter_user'];
-    $filters_applied = true;
-}
-
-if (isset($_GET['filter_status']) && !empty($_GET['filter_status'])) {
-    $where_clause .= $filters_applied ? " AND" : " WHERE";
-    $where_clause .= " o.status = :filter_status";
-    $params[':filter_status'] = $_GET['filter_status'];
     $filters_applied = true;
 }
 
@@ -80,7 +72,17 @@ $revenue_breakdown = $revenue_stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Checks - Coffee</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <?php require "includes/header.php"; ?>
@@ -91,31 +93,19 @@ $revenue_breakdown = $revenue_stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="col-md-12 ftco-animate">
                     <h3 class="mb-4 billing-heading text-center">Order Checks</h3>
 
-                    <!-- Filter Form (already includes status, just verifying consistency) -->
+                    <!-- Filter Form (removed status filter) -->
                     <form method="GET" class="mb-4">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="filter_date">Filter by Date</label>
                                     <input type="date" name="filter_date" id="filter_date" class="form-control" value="<?php echo isset($_GET['filter_date']) ? htmlspecialchars($_GET['filter_date']) : ''; ?>">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="filter_user">Filter by User (Name or ID)</label>
                                     <input type="text" name="filter_user" id="filter_user" class="form-control" value="<?php echo isset($_GET['filter_user']) ? htmlspecialchars($_GET['filter_user']) : ''; ?>" placeholder="e.g., Adham or 2">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="filter_status">Filter by Status</label>
-                                    <select name="filter_status" id="filter_status" class="form-control">
-                                        <option value="">All Statuses</option>
-                                        <option value="Processing" <?php echo (isset($_GET['filter_status']) && $_GET['filter_status'] == 'Processing') ? 'selected' : ''; ?>>Processing</option>
-                                        <option value="Out for delivery" <?php echo (isset($_GET['filter_status']) && $_GET['filter_status'] == 'Out for delivery') ? 'selected' : ''; ?>>Out for Delivery</option>
-                                        <option value="Done" <?php echo (isset($_GET['filter_status']) && $_GET['filter_status'] == 'Done') ? 'selected' : ''; ?>>Done</option>
-                                        <option value="Canceled" <?php echo (isset($_GET['filter_status']) && $_GET['filter_status'] == 'Canceled') ? 'selected' : ''; ?>>Canceled</option>
-                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-12 d-flex justify-content-end mt-2">
@@ -143,10 +133,6 @@ $revenue_breakdown = $revenue_stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </thead>
                                 <tbody>
                                     <?php foreach ($checks as $check): ?>
-                                        <?php
-                                        $order_age = (strtotime('now') - strtotime($check['order_date'])) / (60 * 60); // Hours
-                                        $display_status = ($check['status'] == 'Processing' && $order_age > 24) ? 'Canceled' : $check['status'];
-                                        ?>
                                         <tr>
                                             <td><?php echo $check['order_id']; ?></td>
                                             <td><?php echo date('Y-m-d H:i', strtotime($check['order_date'])); ?></td>
@@ -154,7 +140,7 @@ $revenue_breakdown = $revenue_stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <td><?php echo $check['products'] ?: 'No products'; ?></td>
                                             <td><?php echo $check['total_quantity'] ?: 0; ?></td>
                                             <td>$<?php echo number_format($check['total_price'] ?: 0, 2); ?></td>
-                                            <td><?php echo $display_status; ?></td>
+                                            <td style="color: #14ff14;"><?php echo $check['status']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -204,7 +190,5 @@ $revenue_breakdown = $revenue_stmt->fetchAll(PDO::FETCH_ASSOC);
     </section>
 
     <?php require "includes/footer.php"; ?>
-
-
 </body>
 </html>

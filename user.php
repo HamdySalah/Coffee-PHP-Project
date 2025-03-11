@@ -18,6 +18,7 @@ try {
                GROUP_CONCAT(ur.room_name SEPARATOR ', ') AS rooms
         FROM User u
         LEFT JOIN user_room ur ON u.user_id = ur.user_id
+        WHERE u.role = 0
         GROUP BY u.user_id, u.user_name, u.email, u.ext, u.profile_picture
         ORDER BY u.user_id DESC
     ");
@@ -96,6 +97,7 @@ try {
             <div class="row justify-content-center">
                 <div class="col-md-12 ftco-animate">
                     <h3 class="mb-4 billing-heading text-center">All Users</h3>
+                    <a href="adduser.php" class="btn btn-primary py-3 px-4">Add New User</a>
                     <div class="position-relative">
                     <input type="text" id="searchInput" class="form-control mb-4 pe-5" placeholder="Search by name..." style="margin-bottom: 35px;">
                     <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3 text-white" style="color:white"></i>
@@ -131,7 +133,6 @@ try {
                     <?php endif; ?>
                     <div class="text-center mt-4">
                         <a href="index.php" class="btn btn-secondary py-3 px-4">Back to Home</a>
-                        <a href="adduser.php" class="btn btn-primary py-3 px-4">Add New User</a>
                     </div>
                 </div>
             </div>
