@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirmPassword = $_POST["confirm_password"];
     $room = htmlspecialchars($_POST["room"]);
     $ext = htmlspecialchars($_POST["ext"]);
+    $pic = htmlspecialchars($_POST["pic"]); // Add this line
 
     
     $db = new Database();
@@ -49,8 +50,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (empty($error)) {
+        // Hash the password before storing it
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         // Insert user if no errors
-        $db->insertUser($name, $email, $password, $room, $ext);
+        $db->insertUser($name, $email, $hashedPassword, $room, $ext, $pic); // Add pic to the args
         header("Location: user.php");
         exit();
     }

@@ -3,24 +3,37 @@ session_start();
 require_once 'config.php';
 require_once 'Database.php';
 
+$error = "";
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['logpass'];
-    $db = new Database();
-    $conn = $db->connect();
-    $stmt = $conn->prepare("SELECT * FROM User WHERE email = :email");
-    $stmt->bindParam(':email', $email);
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($user["email"] == $email && $password == $user['password']) {
-        $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['role'] = $user['role'];
-        $_SESSION['user_name'] = $user['user_name'];
-        $_SESSION['profile_picture'] = $user['profile_picture'];
-        header("Location: index.php");
-        exit();
+
+    if (empty($email) || empty($password)) {
+        $error = "Email and password are required.";
+    } else {
+        try {
+            $db = new Database();
+            $user = $db->fetchUserByEmail($email);
+            if ($user["email"] == $email && $password == $user['password']) {
+                $_SESSION['user_id'] = $user['user_id'];
+                $_SESSION['role'] = $user['role'];
+                $_SESSION['user_name'] = $user['user_name'];
+                $_SESSION['profile_picture'] = $user['profile_picture'];
+                header("Location: index.php");
+                exit();
+            } else {
+                $error = "Incorrect email or password.";
+            }
+        } catch (PDOException $e) {
+            $error = "Database error: " . $e->getMessage();
+        }
     }
 }
+// var_dump($_SESSION);echo "<br>";
+// var_dump($_POST);echo "<br>";
+// var_dump($user);echo "<br>";
+// var_dump($error);echo "<br>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,36 +64,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div class="container">
         <div class="row">
           <div class="col-md-12 ftco-animate">
-			<form action="#" class="billing-form ftco-bg-dark p-3 p-md-5" method="post">
-				<h3 class="mb-4 billing-heading">Login</h3>
-	          	<div class="row align-items-end">
-	          		<div class="col-md-12">
-	                <div class="form-group">
-	                	<label for="Email">Email</label>
-	                  <input type="text" class="form-control" name="email" placeholder="Email">
-	                </div>
-	              </div>
-                 
-	              <div class="col-md-12">
-	                <div class="form-group">
-	                	<label for="Password">Password</label>
-	                    <input type="password" class="form-control" name="logpass" placeholder="Password">
-	                </div>
+            <form action="login.php" class="billing-form ftco-bg-dark p-3 p-md-5" method="post">
+                <h3 class="mb-4 billing-heading">Login</h3>
+                <?php if (!empty($error)): ?>
+                    <p class="error"><?php echo $error; ?></p>
+                <?php endif; ?>
+                <div class="row align-items-end">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            <input type="text" class="form-control" name="email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="Password">Password</label>
+                            <input type="password" class="form-control" name="logpass" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <a href="forgot_password.php" class="text-light">Forgot Password?</a>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group mt-4">
+                            <div class="radio">
+                                <button class="btn btn-primary py-3 px-4">Login</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center mt-4">
+                        <a href="index.php" class="btn btn-secondary py-3 px-4">Go to Home</a>
+                    </div>
                 </div>
-                <div class="col-md-12">
-                	<div class="form-group mt-4">
-							<div class="radio">
-                  <button class="btn btn-primary py-3 px-4">Login</button>
-						    </div>
-					</div>
-                </div>
-                <div class="col-md-12 text-center mt-4">
-                    <a href="index.php" class="btn btn-secondary py-3 px-4">Go to Home</a>
-                </div>
-	          </form><!-- END -->
-          </div> <!-- .col-md-8 -->
-          </div>
+            </form>
+          </div> 
         </div>
       </div>
-    </section> <!-- .section -->
+    </section>
 <?php require "includes/footer.php"; ?>

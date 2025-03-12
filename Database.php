@@ -79,5 +79,26 @@ class Database extends Config {
             throw $e;
         }
     }
+
+    public function fetchEmailByToken($token) {
+        $stmt = $this->connect()->prepare("SELECT email FROM password_resets WHERE token = :token");
+        $stmt->execute(['token' => $token]);
+        return $stmt->fetchColumn();
+    }
+
+    public function updatePassword($email, $hashed_password) {
+        $stmt = $this->connect()->prepare("UPDATE User SET password = :password WHERE email = :email");
+        $stmt->execute(['password' => $hashed_password, 'email' => $email]);
+    }
+
+    public function deleteResetToken($token) {
+        $stmt = $this->connect()->prepare("DELETE FROM password_resets WHERE token = :token");
+        $stmt->execute(['token' => $token]);
+    }
+
+    public function storeResetToken($email, $token) {
+        $stmt = $this->connect()->prepare("INSERT INTO password_resets (email, token) VALUES (:email, :token)");
+        $stmt->execute(['email' => $email, 'token' => $token]);
+    }
 }
 ?>
