@@ -48,7 +48,7 @@
         $this->conn = null;
         try {
             $this->conn = new PDO(
-                "mysql:host=" . $this->host ./*";port=".$this->port.*/ ";dbname=" . $this->dbname,
+                "mysql:host=" . $this->host .";port=".$this->port. ";dbname=" . $this->dbname,
                 $this->username,
                 $this->password
             );
