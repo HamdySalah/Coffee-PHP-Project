@@ -16,7 +16,124 @@
   </div>
 </div>
 </section>
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center mb-5 pb-3">
+      <div class="col-md-7 heading-section ftco-animate text-center">
+        <h2 class="mb-4">Meet Our Developers</h2>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-2 col-sm-4 col-6 ftco-animate">
+        <div class="staff">
+          <div class="img" style="background-image: url(uploads/Hamdy.jpg); border-radius: 50%;"></div>
+          <div class="text pt-3 text-center">
+            <h3>Hamdy Salah</h3>
+            <span class="position mb-2">Lead Developer</span>
+            <p>Expert in backend development and database management.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-4 col-6 ftco-animate">
+        <div class="staff">
+          <div class="img" style="background-image: url(uploads/Omar.jpg); border-radius: 50%;"></div>
+          <div class="text pt-3 text-center">
+            <h3>Omar Mahmoud</h3>
+            <span class="position mb-2">Full Stack Developer</span>
+            <p>Specializes in creating beautiful and responsive user interfaces.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-4 col-6 ftco-animate">
+        <div class="staff">
+          <div class="img" style="background-image: url(uploads/Mostafa.jpg); border-radius: 50%;"></div>
+          <div class="text pt-3 text-center">
+            <h3>Mostafa Hosny</h3>
+            <span class="position mb-2">Full Stack Developer</span>
+            <p>Handles both frontend and backend development seamlessly.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-4 col-6 ftco-animate">
+        <div class="staff">
+          <div class="img" style="background-image: url(uploads/Alya.jpeg); border-radius: 50%;"></div>
+          <div class="text pt-3 text-center">
+            <h3>Alya Mahmoud</h3>
+            <span class="position mb-2">Full Stack Developer</span>
+            <p>Handles both frontend and backend development seamlessly.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-4 col-6 ftco-animate">
+        <div class="staff">
+          <div class="img" style="background-image: url(uploads/Yasmeen.jpeg); border-radius: 50%;"></div>
+          <div class="text pt-3 text-center">
+            <h3>Yasmeen Hosam</h3>
+            <span class="position mb-2">Full Stack Developer</span>
+            <p>Ensures the quality and reliability of the application.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<section class="ftco-section img" id="ftco-testimony" style="background-image: url(assets/images/bg_1.jpg);" data-stellar-background-ratio="0.5">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-7 heading-section text-center ftco-animate">
+        <span class="subheading">Testimony</span>
+        <h2 class="mb-4">Customers Says</h2>
+        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+      </div>
+    </div>
+  </div>
+  <div class="container-wrap">
+    <div class="row d-flex no-gutters">
+      <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
+        <div class="testimony text-center">
+          <div class="user-img" style="background-image: url(assets/images/person_1.jpg)"></div>
+          <div class="text">
+            <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            <p class="name">John Doe</p>
+            <span class="position">Customer</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
+        <div class="testimony text-center">
+          <div class="user-img" style="background-image: url(assets/images/person_2.jpg)"></div>
+          <div class="text">
+            <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            <p class="name">Jane Doe</p>
+            <span class="position">Customer</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
+        <div class="testimony text-center">
+          <div class="user-img" style="background-image: url(assets/images/person_3.jpg)"></div>
+          <div class="text">
+            <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            <p class="name">Mark Smith</p>
+            <span class="position">Customer</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
+        <div class="testimony text-center">
+          <div class="user-img" style="background-image: url(assets/images/person_4.jpg)"></div>
+          <div class="text">
+            <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            <p class="name">Sarah Johnson</p>
+            <span class="position">Customer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="ftco-about d-md-flex">
   <div class="one-half img" style="background-image: url(assets/images/about.jpg);"></div>
   <div class="one-half ftco-animate">
@@ -111,45 +228,6 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="ftco-section">
-  <div class="container">
-      <div class="row align-items-center">
-          <div class="col-md-6 pr-md-5">
-              <div class="heading-section text-md-right ftco-animate">
-            <span class="subheading">Discover</span>
-          <h2 class="mb-4">Our Menu</h2>
-          <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-          <p><a href="#" class="btn btn-primary btn-outline-primary px-4 py-3">View Full Menu</a></p>
-        </div>
-          </div>
-          <div class="col-md-6">
-              <div class="row">
-                  <div class="col-md-6">
-                      <div class="menu-entry">
-                          <a href="#" class="img" style="background-image: url(assets/images/menu-1.jpg);"></a>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <div class="menu-entry mt-lg-4">
-                          <a href="#" class="img" style="background-image: url(assets/images/menu-2.jpg);"></a>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <div class="menu-entry">
-                          <a href="#" class="img" style="background-image: url(assets/images/menu-3.jpg);"></a>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <div class="menu-entry mt-lg-4">
-                          <a href="#" class="img" style="background-image: url(assets/images/menu-4.jpg);"></a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
   </div>
 </section>
 

@@ -88,6 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($error)) {
         $_SESSION['error'] = $error;
         header("Location: adduser.php");
+
         exit();
     }
 }
