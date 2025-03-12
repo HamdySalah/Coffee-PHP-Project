@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'config.php';
 require_once 'Database.php';
 
@@ -6,15 +7,21 @@ $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize inputs
-    $name = htmlspecialchars($_POST["name"]);
+    $name = htmlspecialchars($_POST["username"]);
     $email = htmlspecialchars($_POST["email"]);
     $password = $_POST["password"];
     $confirmPassword = $_POST["confirm_password"];
     $room = htmlspecialchars($_POST["room"]);
     $ext = htmlspecialchars($_POST["ext"]);
-    $pic = htmlspecialchars($_POST["pic"]); // Add this line
 
-    
+    // Store form data in session to repopulate the form if validation fails
+    $_SESSION['form_data'] = [
+        'username' => $name,
+        'email' => $email,
+        'room' => $room,
+        'ext' => $ext
+    ];
+
     $db = new Database();
     if (empty($name)) {
         $error .= "Name is required.<br>";
@@ -49,12 +56,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error .= "EXT is required.<br>";
     }
 
+    // Handle file upload if no errors so far
+    $profile_picture = null;
+    if (empty($error) && isset($_FILES['pic']) && $_FILES['pic']['error'] == UPLOAD_ERR_OK) {
+        $upload_dir = 'uploads/users/';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+        $profile_picture = $upload_dir . uniqid() . '-' . basename($_FILES['pic']['name']);
+        if (!move_uploaded_file($_FILES['pic']['tmp_name'], $profile_picture)) {
+            $error .= "Failed to move uploaded file.<br>";
+        }
+    }
+
     if (empty($error)) {
         // Hash the password before storing it
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         // Insert user if no errors
-        $db->insertUser($name, $email, $hashedPassword, $room, $ext, $pic); // Add pic to the args
-        header("Location: user.php");
+        try {
+            $db->insertUser($name, $email, $hashedPassword, $room, $ext, $profile_picture);
+            $_SESSION['profile_picture'] = $profile_picture; // Store image in session
+            unset($_SESSION['form_data']); // Clear form data on success
+            header("Location: user.php");
+            exit();
+        } catch (PDOException $e) {
+            $error .= "Error adding user: " . $e->getMessage() . "<br>";
+        }
+    }
+
+    // If there are errors, store them in the session and redirect back to adduser.php
+    if (!empty($error)) {
+        $_SESSION['error'] = $error;
+        header("Location: adduser.php");
         exit();
     }
 }

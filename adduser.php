@@ -9,42 +9,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
 }
 
 $db = new Database();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['pass'];
-    $cpassword = $_POST['cpass'];
-    $room = $_POST['room'];
-    $ext = $_POST['ext'];
-
-    if ($password !== $cpassword) {
-        $error = "Passwords do not match!";
-    } else {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-        $profile_picture = null;
-        if (isset($_FILES['pic']) && $_FILES['pic']['error'] == UPLOAD_ERR_OK) {
-            $upload_dir = 'uploads/users/';
-            if (!is_dir($upload_dir)) {
-                mkdir($upload_dir, 0777, true);
-            }
-            $profile_picture = $upload_dir . uniqid() . '-' . basename($_FILES['pic']['name']);
-            if (move_uploaded_file($_FILES['pic']['tmp_name'], $profile_picture)) {
-                $_SESSION['profile_picture'] = $profile_picture; // Store image in session
-                echo "File uploaded successfully to: " . $profile_picture;
-            } else {
-                $error = "Failed to move uploaded file.";
-            }
-        }
-        try {
-            $db->insertUser($name, $email, $hashed_password, $room, $ext, $profile_picture);
-            header("Location: user.php");
-            exit();
-        } catch (PDOException $e) {
-            $error = "Error adding user: " . $e->getMessage();
-        }
-    }
-}
+$error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
+unset($_SESSION['error']); 
 ?>
 
 <!DOCTYPE html>
@@ -75,34 +41,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 ftco-animate">
-                    <form action="adduser.php" method="POST" class="billing-form ftco-bg-dark p-4 p-md-5" enctype="multipart/form-data">
+                    <form action="validate.php" method="POST" class="billing-form ftco-bg-dark p-4 p-md-5" enctype="multipart/form-data">
                         <h3 class="mb-4 billing-heading text-center">Add User</h3>
-                        <?php if (isset($error)): ?>
+                        <?php if (!empty($error)): ?>
                             <p class="error"><?php echo $error; ?></p>
                         <?php endif; ?>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="username">Username</label>
-                                    <input type="text" class="form-control" name="username" placeholder="Username" required>
+                                    <input type="text" class="form-control" name="username" placeholder="Username" value="<?php echo isset($_SESSION['form_data']['username']) ? htmlspecialchars($_SESSION['form_data']['username']) : ''; ?>" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" name="email" placeholder="Email" required>
+                                    <input type="email" class="form-control" name="email" placeholder="Email" value="<?php echo isset($_SESSION['form_data']['email']) ? htmlspecialchars($_SESSION['form_data']['email']) : ''; ?>" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="pass">Password</label>
-                                    <input type="password" class="form-control" name="pass" placeholder="Password" required>
+                                    <input type="password" class="form-control" name="password" placeholder="Password" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="cpass">Confirm Password</label>
-                                    <input type="password" class="form-control" name="cpass" placeholder="Confirm Password" required>
+                                    <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -111,8 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <select id="room" name="room" class="form-control" required>
                                         <?php 
                                         $rooms = $db->fetchAllRooms();
-                                        foreach ($rooms as $room) {
-                                            echo "<option value='" . htmlspecialchars($room['room_name']) . "'>" . htmlspecialchars($room['room_name']) . "</option>";
+                                        foreach ($rooms as $roomOption) {
+                                            $selected = (isset($_SESSION['form_data']['room']) && $_SESSION['form_data']['room'] == $roomOption['room_name']) ? 'selected' : '';
+                                            echo "<option value='" . htmlspecialchars($roomOption['room_name']) . "' $selected>" . htmlspecialchars($roomOption['room_name']) . "</option>";
                                         }
                                         ?>
                                     </select>
@@ -121,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="ext">EXT</label>
-                                    <input type="text" class="form-control" name="ext" placeholder="EXT" required>
+                                    <input type="text" class="form-control" name="ext" placeholder="EXT" value="<?php echo isset($_SESSION['form_data']['ext']) ? htmlspecialchars($_SESSION['form_data']['ext']) : ''; ?>" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -144,5 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </section>
 
     <?php require "includes/footer.php"; ?>
+    <?php unset($_SESSION['form_data']); // Clear form data after rendering ?>
 </body>
 </html>
