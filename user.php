@@ -18,6 +18,7 @@ try {
                GROUP_CONCAT(ur.room_name SEPARATOR ', ') AS rooms
         FROM User u
         LEFT JOIN user_room ur ON u.user_id = ur.user_id
+        WHERE u.role = 0
         GROUP BY u.user_id, u.user_name, u.email, u.ext, u.profile_picture
         ORDER BY u.user_id DESC
     ");
@@ -79,6 +80,12 @@ try {
         strong{
             color :gray;
         }
+        i{
+            z-index: 11;
+            top: 9px;
+            right: 27px;
+            font-size: 25px;
+        }
         
     </style>
 </head>
@@ -90,12 +97,17 @@ try {
             <div class="row justify-content-center">
                 <div class="col-md-12 ftco-animate">
                     <h3 class="mb-4 billing-heading text-center">All Users</h3>
-                    <?php if (empty($users)): ?>
+                    <a href="adduser.php" class="btn btn-primary py-3 px-4">Add New User</a>
+                    <div class="position-relative">
+                    <input type="text" id="searchInput" class="form-control mb-4 pe-5" placeholder="Search by name..." style="margin-bottom: 35px;">
+                    <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3 text-white" style="color:white"></i>
+                    </div>                    
+                <?php if (empty($users)): ?>
                         <p class="text-center text-white">No users found.</p>
                     <?php else: ?>
-                        <div class="row">
+                        <div class="row" id="userList">
                             <?php foreach ($users as $user): ?>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3 mb-3 user-card-container">
                                     <div class="user-card">
                                         <?php
                                         $profile_picture = $user['profile_picture'];
@@ -121,7 +133,6 @@ try {
                     <?php endif; ?>
                     <div class="text-center mt-4">
                         <a href="index.php" class="btn btn-secondary py-3 px-4">Back to Home</a>
-                        <a href="adduser.php" class="btn btn-primary py-3 px-4">Add New User</a>
                     </div>
                 </div>
             </div>
@@ -130,5 +141,20 @@ try {
 
     <?php require "includes/footer.php"; ?>
 
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            var searchValue = this.value.toLowerCase();
+            var userCards = document.querySelectorAll('.user-card-container');
+
+            userCards.forEach(function(card) {
+                var userName = card.querySelector('.card-title').textContent.toLowerCase();
+                if (userName.includes(searchValue)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
