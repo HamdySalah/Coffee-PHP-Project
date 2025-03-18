@@ -29,6 +29,7 @@ $stmt = $conn->prepare("
     LEFT JOIN Product p ON op.f_product_id = p.product_id
     $where_clause
     GROUP BY o.order_id, o.order_date, o.status
+    ORDER BY o.order_id DESC
 ");
 $stmt->execute($params);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
