@@ -69,7 +69,7 @@
           <div class="img" style="background-image: url(uploads/Yasmeen.jpeg); border-radius: 50%;"></div>
           <div class="text pt-3 text-center">
             <h3>Yasmeen Hosam</h3>
-            <span class="position mb-2">Full Stack Developer</span>
+            <span class="position mb-2">QA Engineer</span>
             <p>Ensures the quality and reliability of the application.</p>
           </div>
         </div>
