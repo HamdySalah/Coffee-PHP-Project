@@ -1,5 +1,8 @@
 <?php require "includes/header.php"; ?>
-
+<style>
+  .staff{
+  padding: 8px !important}
+</style>
 <section class="home-slider owl-carousel">
 
 <div class="slider-item" style="background-image: url(assets/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
@@ -26,7 +29,7 @@
     <div class="row justify-content-center">
       <div class="col-md-2 col-sm-4 col-6 ftco-animate">
         <div class="staff">
-          <div class="img" style="background-image: url(uploads/Hamdy.jpg); border-radius: 50%;"></div>
+        <a href="https://www.linkedin.com/in/hamdy-salah/" target="blank"><div class="img" title="Go to Linkedin" style="background-image: url(uploads/Hamdy.jpg); border-radius: 50%;"></div></a>
           <div class="text pt-3 text-center">
             <h3>Hamdy Salah</h3>
             <span class="position mb-2">Lead Developer</span>
@@ -36,17 +39,17 @@
       </div>
       <div class="col-md-2 col-sm-4 col-6 ftco-animate">
         <div class="staff">
-          <div class="img" style="background-image: url(uploads/Omar.jpg); border-radius: 50%;"></div>
+          <a href="https://www.linkedin.com/in/omarmahmoud2002/" target="blank"><div class="img" title="Go to Linkedin" style="background-image: url(uploads/Omar.jpg); border-radius: 50%;"></div></a>
           <div class="text pt-3 text-center">
             <h3>Omar Mahmoud</h3>
             <span class="position mb-2">Full Stack Developer</span>
-            <p>Specializes in creating beautiful and responsive user interfaces.</p>
+            <p>Handles both frontend and backend development seamlessly..</p>
           </div>
         </div>
       </div>
       <div class="col-md-2 col-sm-4 col-6 ftco-animate">
         <div class="staff">
-          <div class="img" style="background-image: url(uploads/Mostafa.jpg); border-radius: 50%;"></div>
+        <a href="https://www.linkedin.com/in/mostafahosny99/" target="blank"><div class="img" title="Go to Linkedin" style="background-image: url(uploads/Mostafa.jpg); border-radius: 50%;"></div></a>
           <div class="text pt-3 text-center">
             <h3>Mostafa Hosny</h3>
             <span class="position mb-2">Full Stack Developer</span>
@@ -56,7 +59,7 @@
       </div>
       <div class="col-md-2 col-sm-4 col-6 ftco-animate">
         <div class="staff">
-          <div class="img" style="background-image: url(uploads/Alya.jpeg); border-radius: 50%;"></div>
+        <a href="https://www.linkedin.com/in/alya-mahmoud/" target="blank"><div class="img" title="Go to Linkedin" style="background-image: url(uploads/Alya.jpeg); border-radius: 50%;"></div></a>
           <div class="text pt-3 text-center">
             <h3>Alya Mahmoud</h3>
             <span class="position mb-2">Full Stack Developer</span>
@@ -66,7 +69,7 @@
       </div>
       <div class="col-md-2 col-sm-4 col-6 ftco-animate">
         <div class="staff">
-          <div class="img" style="background-image: url(uploads/Yasmeen.jpeg); border-radius: 50%;"></div>
+        <a href="https://www.linkedin.com/in/yasmeen-hosam-763379222/" target="blank"><div class="img" title="Go to Linkedin" style="background-image: url(uploads/Yasmeen.jpeg); border-radius: 50%;"></div></a>
           <div class="text pt-3 text-center">
             <h3>Yasmeen Hosam</h3>
             <span class="position mb-2">QA Engineer</span>

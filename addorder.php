@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             if ($inserted_products > 0) {
-                header("Location: " . ($_SESSION['role'] == 1 ? "admin_orders.php" : "user_orders.php"));
+                header("Location: " . ($_SESSION['role'] == 1 ? "admin_orders.php" : "orders.php"));
                 exit();
             } else {
                 $error = "No valid products with quantities were selected.";

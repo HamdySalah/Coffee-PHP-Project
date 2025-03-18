@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <form action="login.php" class="billing-form ftco-bg-dark p-3 p-md-5" method="post">
                 <h3 class="mb-4 billing-heading">Login</h3>
                 <?php if (!empty($error)): ?>
-                    <p class="error"><?php echo $error; ?></p>
+                    <p class="error" style="color: red;" ><?php echo $error; ?></p>
                 <?php endif; ?>
                 <div class="row align-items-end">
                     <div class="col-md-12">
