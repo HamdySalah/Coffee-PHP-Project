@@ -6,12 +6,13 @@
     define('BASE_URL', 'http://localhost/Coffee-PHP-Project/');
     class Config {
     #General Config To Remote DB for All Developers
-    private $host = "nozomi.proxy.rlwy.net";
-    private $dbname = "railway";
-    private $username = "root";
-    private $password = "hZhDzuMNFzuSYMkzkNkYTRjetBvRElRd"; 
-    private $port = "51811";
-    private $conn;
+    
+    // private $host = "nozomi.proxy.rlwy.net";
+    // private $dbname = "railway";
+    // private $username = "root";
+    // private $password = "hZhDzuMNFzuSYMkzkNkYTRjetBvRElRd"; 
+    // private $port = "51811";
+    // private $conn;
 
     #Mostafa Config
     // private $host = "localhost";
