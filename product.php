@@ -7,29 +7,10 @@ $db = new Database();
 $conn = $db->connect();
 
 // Get categories for filter dropdown
-$cat_stmt = $conn->prepare("SELECT * FROM Category");
-$cat_stmt->execute();
-$categories = $cat_stmt->fetchAll(PDO::FETCH_ASSOC);
+$categories = $db->fetchAllCategories();
 
 // Prepare product query with search and filter
-$query = "SELECT p.*, c.category_name FROM Product p JOIN Category c ON p.f_category_id = c.category_id WHERE 1=1";
-$params = [];
-
-if (!empty($_GET['search'])) {
-    $query .= " AND p.product_name LIKE :search";
-    $params[':search'] = '%' . trim($_GET['search']) . '%';
-}
-
-if (!empty($_GET['category']) && $_GET['category'] !== 'all') {
-    $query .= " AND p.f_category_id = :category";
-    $params[':category'] = intval($_GET['category']);
-}
-
-$query .= " ORDER BY p.product_id DESC";
-
-$stmt = $conn->prepare($query);
-$stmt->execute($params);
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$products = $db->fetchProductsWithFilters($_GET['search'] ?? null, $_GET['category'] ?? null);
 
 ?>
 

@@ -10,29 +10,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $db = new Database();
 $conn = $db->connect();
+$orders = $db->fetchOrdersWithFilters($_SESSION['user_id'], $_GET['filter_date'] ?? null);
 
-$where_clause = "WHERE o.f_user_id = :user_id";
-$params = [':user_id' => $_SESSION['user_id']];
-if (isset($_GET['filter_date']) && !empty($_GET['filter_date'])) {
-    $filter_date = $_GET['filter_date'];
-    $where_clause .= " AND DATE(o.order_date) = :filter_date";
-    $params[':filter_date'] = $filter_date;
-}
-
-$stmt = $conn->prepare("
-    SELECT o.order_id, o.order_date, o.status,
-           GROUP_CONCAT(CONCAT(p.product_name, ' (', op.quntity, ' x $', p.price, ')') SEPARATOR ', ') AS products,
-           SUM(op.quntity) AS total_quantity,
-           SUM(op.quntity * p.price) AS total_price
-    FROM Orders o
-    LEFT JOIN Order_product op ON o.order_id = op.f_order_id
-    LEFT JOIN Product p ON op.f_product_id = p.product_id
-    $where_clause
-    GROUP BY o.order_id, o.order_date, o.status
-    ORDER BY o.order_id DESC
-");
-$stmt->execute($params);
-$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $total_orders = count($orders);
 $total_price_all = array_sum(array_column($orders, 'total_price'));
