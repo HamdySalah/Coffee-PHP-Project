@@ -27,59 +27,121 @@
       </div>
     </div>
     <div class="row justify-content-center">
+
+      <!-- Hamdy Salah -->
       <div class="col-md-2 col-sm-4 col-6 ftco-animate">
         <div class="staff">
-        <a href="https://www.linkedin.com/in/hamdy-salah/" target="blank"><div class="img" title="Go to Linkedin" style="background-image: url(uploads/Hamdy.jpg); border-radius: 50%;"></div></a>
+          <a href="https://www.linkedin.com/in/hamdy-salah/" target="_blank">
+            <div class="img" title="Go to Linkedin" style="background-image: url(uploads/Hamdy.jpg); border-radius: 50%;"></div>
+          </a>
           <div class="text pt-3 text-center">
             <h3>Hamdy Salah</h3>
             <span class="position mb-2">Lead Developer</span>
             <p>Expert in backend development and database management.</p>
+            <div>
+              <a href="https://www.linkedin.com/in/hamdy-salah/" target="_blank" class="me-2">
+                <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
+              </a>
+              <a href="https://github.com/HamdySalah" target="_blank">
+                <i class="bi bi-github" style="font-size: 1.5rem;"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Omar Mahmoud -->
       <div class="col-md-2 col-sm-4 col-6 ftco-animate">
         <div class="staff">
-          <a href="https://www.linkedin.com/in/omarmahmoud2002/" target="blank"><div class="img" title="Go to Linkedin" style="background-image: url(uploads/Omar.jpg); border-radius: 50%;"></div></a>
+          <a href="https://www.linkedin.com/in/omarmahmoud2002/" target="_blank">
+            <div class="img" title="Go to Linkedin" style="background-image: url(uploads/Omar.jpg); border-radius: 50%;"></div>
+          </a>
           <div class="text pt-3 text-center">
             <h3>Omar Mahmoud</h3>
             <span class="position mb-2">Full Stack Developer</span>
-            <p>Handles both frontend and backend development seamlessly..</p>
+            <p>Handles both frontend and backend development seamlessly.</p>
+            <div>
+              <a href="https://www.linkedin.com/in/omarmahmoud2002/" target="_blank" class="me-2">
+                <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
+              </a>
+              <a href="https://github.com/omarmahmoud2002" target="_blank">
+                <i class="bi bi-github" style="font-size: 1.5rem;"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Mostafa Hosny -->
       <div class="col-md-2 col-sm-4 col-6 ftco-animate">
         <div class="staff">
-        <a href="https://www.linkedin.com/in/mostafahosny99/" target="blank"><div class="img" title="Go to Linkedin" style="background-image: url(uploads/Mostafa.jpg); border-radius: 50%;"></div></a>
+          <a href="https://www.linkedin.com/in/mostafahosny99/" target="_blank">
+            <div class="img" title="Go to Linkedin" style="background-image: url(uploads/Mostafa.jpg); border-radius: 50%;"></div>
+          </a>
           <div class="text pt-3 text-center">
             <h3>Mostafa Hosny</h3>
             <span class="position mb-2">Full Stack Developer</span>
             <p>Handles both frontend and backend development seamlessly.</p>
+            <div>
+              <a href="https://www.linkedin.com/in/mostafahosny99/" target="_blank" class="me-2">
+                <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
+              </a>
+              <a href="https://github.com/mostafa99hosny" target="_blank">
+                <i class="bi bi-github" style="font-size: 1.5rem;"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Alya Mahmoud -->
       <div class="col-md-2 col-sm-4 col-6 ftco-animate">
         <div class="staff">
-        <a href="https://www.linkedin.com/in/alya-mahmoud/" target="blank"><div class="img" title="Go to Linkedin" style="background-image: url(uploads/Alya.jpeg); border-radius: 50%;"></div></a>
+          <a href="https://www.linkedin.com/in/alya-mahmoud/" target="_blank">
+            <div class="img" title="Go to Linkedin" style="background-image: url(uploads/Alya.jpeg); border-radius: 50%;"></div>
+          </a>
           <div class="text pt-3 text-center">
             <h3>Alya Mahmoud</h3>
             <span class="position mb-2">Full Stack Developer</span>
             <p>Handles both frontend and backend development seamlessly.</p>
+            <div>
+              <a href="https://www.linkedin.com/in/alya-mahmoud/" target="_blank" class="me-2">
+                <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
+              </a>
+              <a href="https://github.com/Alyaa289" target="_blank">
+                <i class="bi bi-github" style="font-size: 1.5rem;"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Yasmeen Hosam -->
       <div class="col-md-2 col-sm-4 col-6 ftco-animate">
         <div class="staff">
-        <a href="https://www.linkedin.com/in/yasmeen-hosam-763379222/" target="blank"><div class="img" title="Go to Linkedin" style="background-image: url(uploads/Yasmeen.jpeg); border-radius: 50%;"></div></a>
+          <a href="https://www.linkedin.com/in/yasmeen-hosam-763379222/" target="_blank">
+            <div class="img" title="Go to Linkedin" style="background-image: url(uploads/Yasmeen.jpeg); border-radius: 50%;"></div>
+          </a>
           <div class="text pt-3 text-center">
             <h3>Yasmeen Hosam</h3>
             <span class="position mb-2">QA Engineer</span>
             <p>Ensures the quality and reliability of the application.</p>
+            <div>
+              <a href="https://www.linkedin.com/in/yasmeen-hosam-763379222/" target="_blank" class="me-2">
+                <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
+              </a>
+              <a href="https://github.com/YasmeenHosam" target="_blank">
+                <i class="bi bi-github" style="font-size: 1.5rem;"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
+
 
 <section class="ftco-section img" id="ftco-testimony" style="background-image: url(assets/images/bg_1.jpg);" data-stellar-background-ratio="0.5">
   <div class="overlay"></div>

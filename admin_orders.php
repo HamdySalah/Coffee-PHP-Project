@@ -44,7 +44,7 @@ if (isset($_GET['filter_status']) && !empty($_GET['filter_status'])) {
 }
 
 $stmt = $conn->prepare("
-    SELECT o.order_id, o.order_date, o.status, u.user_name,
+    SELECT o.order_id, o.order_date, o.status, u.user_name, o.order_notes,
            GROUP_CONCAT(CONCAT(p.product_name, ' (', op.quntity, ' x $', p.price, ')') SEPARATOR ', ') AS products,
            SUM(op.quntity) AS total_quantity,
            SUM(op.quntity * p.price) AS total_price
@@ -53,7 +53,7 @@ $stmt = $conn->prepare("
     LEFT JOIN Order_product op ON o.order_id = op.f_order_id
     LEFT JOIN Product p ON op.f_product_id = p.product_id
     $where_clause
-    GROUP BY o.order_id, o.order_date, o.status, u.user_name
+    GROUP BY o.order_id, o.order_date, o.status, u.user_name, o.order_notes
     ORDER BY o.order_date DESC
 ");
 $stmt->execute($params);
@@ -70,22 +70,6 @@ $total_revenue = array_sum(array_column($orders, 'total_price'));
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
-
-    <link rel="stylesheet" href="assets/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/aos.css">
-    <link rel="stylesheet" href="assets/css/ionicons.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="assets/css/jquery.timepicker.css">
-    <link rel="stylesheet" href="assets/css/flaticon.css">
-    <link rel="stylesheet" href="assets/css/icomoon.css">
-    <link rel="stylesheet" href="assets/css/style.css">
     <style>
         .status-overdue { color:rgb(250, 102, 117);}
         .status-done {  color:rgb(40, 167, 69);}
@@ -144,6 +128,7 @@ $total_revenue = array_sum(array_column($orders, 'total_price'));
                                         <th>Date</th>
                                         <th>User</th>
                                         <th>Products (Quantity x Price)</th>
+                                        <th>Order Notes</th>
                                         <th>Total Quantity</th>
                                         <th>Total Price</th>
                                         <th>Status</th>
@@ -160,6 +145,7 @@ $total_revenue = array_sum(array_column($orders, 'total_price'));
                                             <td><?php echo date('Y-m-d H:i', strtotime($order['order_date'])); ?></td>
                                             <td><?php echo $order['user_name']; ?></td>
                                             <td><?php echo $order['products'] ?: 'No products'; ?></td>
+                                            <td><?php echo htmlspecialchars($order['order_notes'] ?? 'No notes'); ?></td>
                                             <td><?php echo $order['total_quantity'] ?: 0; ?></td>
                                             <td>$<?php echo number_format($order['total_price'] ?: 0, 2); ?></td>
                                             <td>
@@ -199,20 +185,5 @@ $total_revenue = array_sum(array_column($orders, 'total_price'));
 
     <?php require "includes/footer.php"; ?>
 
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/jquery.easing.1.3.js"></script>
-    <script src="assets/js/jquery.waypoints.min.js"></script>
-    <script src="assets/js/jquery.stellar.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/aos.js"></script>
-    <script src="assets/js/jquery.animateNumber.min.js"></script>
-    <script src="assets/js/bootstrap-datepicker.js"></script>
-    <script src="assets/js/jquery.timepicker.min.js"></script>
-    <script src="assets/js/scrollax.min.js"></script>
-    <script src="assets/js/main.js"></script>
 </body>
 </html>

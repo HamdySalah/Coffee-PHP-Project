@@ -21,11 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_SESSION['role'] == 1 ? $_POST['user_id'] : $_SESSION['user_id'];
     $products_selected = $_POST['products'] ?? [];
     $quantities = $_POST['quantities'] ?? [];
+    $order_notes = $_POST['order_notes'] ?? '';
 
     if (!empty($products_selected)) {
         try {
-            $stmt = $conn->prepare("INSERT INTO Orders (order_date, status, f_user_id) VALUES (NOW(), 'Processing', :user_id)");
-            $stmt->execute(['user_id' => $user_id]);
+            $stmt = $conn->prepare("INSERT INTO Orders (order_date, status, f_user_id, order_notes) VALUES (NOW(), 'Processing', :user_id, :order_notes)");
+            $stmt->execute(['user_id' => $user_id, 'order_notes' => $order_notes]);
             $order_id = $conn->lastInsertId();
             $product_quantities = [];
             foreach ($products as $index => $product) {
@@ -138,6 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="order_notes">Order Notes</label>
+                                    <textarea name="order_notes" id="order_notes" class="form-control" rows="4" placeholder="Add any special instructions or notes for the order..."></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
