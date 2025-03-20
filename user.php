@@ -10,20 +10,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     exit();
 }
 try {
-    $db = new Config();
+    $db = new Database();//edit
     $conn = $db->connect();
-
-    $stmt = $conn->prepare("
-        SELECT u.user_id, u.user_name, u.email, u.ext, u.profile_picture, 
-               GROUP_CONCAT(ur.room_name SEPARATOR ', ') AS rooms
-        FROM User u
-        LEFT JOIN user_room ur ON u.user_id = ur.user_id
-        WHERE u.role = 0
-        GROUP BY u.user_id, u.user_name, u.email, u.ext, u.profile_picture
-        ORDER BY u.user_id DESC
-    ");
-    $stmt->execute();
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $users = $db->fetchAllUsersWithRooms();//edited
 } catch (PDOException $e) {
     die("Database Error: " . $e->getMessage());
 } catch (Exception $e) {

@@ -12,7 +12,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
 $db = new Database();
 $conn = $db->connect();
 
-$categories = $conn->query("SELECT * FROM Category")->fetchAll(PDO::FETCH_ASSOC);
+// $categories = $conn->query("SELECT * FROM Category")->fetchAll(PDO::FETCH_ASSOC);
+$categories = $db->fetchAllCategories();
 
 if (!isset($_GET['id'])) {
     header("Location: product.php");
@@ -20,9 +21,7 @@ if (!isset($_GET['id'])) {
 }
 
 $product_id = intval($_GET['id']);
-$product_stmt = $conn->prepare("SELECT * FROM Product WHERE product_id = :product_id");
-$product_stmt->execute([':product_id' => $product_id]);
-$product = $product_stmt->fetch(PDO::FETCH_ASSOC);
+$product = $db->fetchProductById($product_id);
 
 if (!$product) {
     header("Location: product.php");
@@ -69,15 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (!isset($error)) {
             try {
-                $stmt = $conn->prepare("UPDATE Product SET product_name = :name, price = :price, f_category_id = :category_id, status = :status, product_image = :product_image WHERE product_id = :product_id");
-                $stmt->execute([
-                    'name' => $name,
-                    'price' => $price,
-                    'category_id' => $category_id,
-                    'status' => $status,
-                    'product_image' => $product_image,
-                    'product_id' => $product_id
-                ]);
+                $db->updateProduct($product_id, $name, $price, $category_id, $status, $product_image);
                 header("Location: product.php");
                 exit();
             } catch (PDOException $e) {
