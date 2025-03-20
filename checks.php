@@ -31,7 +31,7 @@ if (isset($_GET['filter_user']) && !empty($_GET['filter_user'])) {
 
 // Fetch orders with product prices and totals
 $stmt = $conn->prepare("
-    SELECT o.order_id, o.order_date, o.status, u.user_name,
+    SELECT o.order_id, o.order_date, o.status, u.user_name, o.order_notes,
            GROUP_CONCAT(CONCAT(p.product_name, ' (', op.quntity, ' x $', p.price, ')') SEPARATOR ', ') AS products,
            SUM(op.quntity) AS total_quantity,
            SUM(op.quntity * p.price) AS total_price
@@ -40,7 +40,7 @@ $stmt = $conn->prepare("
     LEFT JOIN Order_product op ON o.order_id = op.f_order_id
     LEFT JOIN Product p ON op.f_product_id = p.product_id
     $where_clause
-    GROUP BY o.order_id, o.order_date, o.status, u.user_name
+    GROUP BY o.order_id, o.order_date, o.status, u.user_name, o.order_notes
     ORDER BY o.order_date DESC
 ");
 $stmt->execute($params);
@@ -126,6 +126,7 @@ $revenue_breakdown = $revenue_stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <th>Date</th>
                                         <th>User</th>
                                         <th>Products (Quantity x Price)</th>
+                                        <th>Order Notes</th>
                                         <th>Total Quantity</th>
                                         <th>Total Price</th>
                                         <th>Status</th>
@@ -138,6 +139,7 @@ $revenue_breakdown = $revenue_stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <td><?php echo date('Y-m-d H:i', strtotime($check['order_date'])); ?></td>
                                             <td><strong><?php echo $check['user_name']; ?></strong></td>
                                             <td><?php echo $check['products'] ?: 'No products'; ?></td>
+                                            <td><?php echo htmlspecialchars($check['order_notes'] ?? 'No notes'); ?></td>
                                             <td><?php echo $check['total_quantity'] ?: 0; ?></td>
                                             <td>$<?php echo number_format($check['total_price'] ?: 0, 2); ?></td>
                                             <td style="color: #14ff14;"><?php echo $check['status']; ?></td>
