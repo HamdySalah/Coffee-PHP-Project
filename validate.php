@@ -91,5 +91,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         exit();
     }
+    // if($_POST['submit']){
+    //     mail($_POST['email'],"My subject",$msg);
+    // }
 }
 ?>

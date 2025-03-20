@@ -100,5 +100,15 @@ class Database extends Config {
         $stmt = $this->connect()->prepare("INSERT INTO password_resets (email, token) VALUES (:email, :token)");
         $stmt->execute(['email' => $email, 'token' => $token]);
     }
+    public function fetchAllCategories() {
+        $stmt = $this->connect()->query("SELECT * FROM Category");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function execute($query, $params = []) {
+        $stmt = $this->connect()->prepare($query);
+        $stmt->execute($params);
+        return $stmt;
+    }
 }
 ?>

@@ -5,14 +5,15 @@ error_reporting(E_ALL);
 
 session_start();
 require_once 'config.php';
+require_once 'Database.php';
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: login.php");
     exit();
 }
 try {
-    $db = new Config();
+    $db = new Database();
     $conn = $db->connect();
-
+    $user = $db->fetchAllUsers();
     $stmt = $conn->prepare("
         SELECT u.user_id, u.user_name, u.email, u.ext, u.profile_picture, 
                GROUP_CONCAT(ur.room_name SEPARATOR ', ') AS rooms

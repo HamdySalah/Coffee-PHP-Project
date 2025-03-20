@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
 $db = new Database();
 $conn = $db->connect();
 
-$categories = $conn->query("SELECT * FROM Category")->fetchAll(PDO::FETCH_ASSOC);
+$categories = $db->fetchAllCategories();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = trim($_POST['name']); // Sanitize input

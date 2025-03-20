@@ -15,7 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             $db = new Database();
             $user = $db->fetchUserByEmail($email);
-            if ($user["email"] == $email && $password == $user['password']) {
+
+            // Debugging: Log fetched user data
+            // Remove these logs in production
+            error_log("Fetched user: " . print_r($user, true));
+
+            if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['user_name'] = $user['user_name'];
@@ -23,6 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header("Location: index.php");
                 exit();
             } else {
+                // Debugging: Log password verification result
+                error_log("Password verification failed for email: $email");
                 $error = "Incorrect email or password.";
             }
         } catch (PDOException $e) {

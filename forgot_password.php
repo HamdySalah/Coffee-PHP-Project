@@ -20,17 +20,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $db->storeResetToken($email, $token);
 
                 // Send reset link to user's email
-                // Old code:
-                // $resetLink = "http://yourdomain.com/reset_password.php?token=" . $token;
-                $resetLink = "http://" . $_SERVER['HTTP_HOST'] . "/reset_password.php?token=" . $token;
-                $subject = "Password Reset";
-                $message = "Click this link to reset your password: " . $resetLink;
-                $headers = "From: no-reply@yourdomain.com";
+                $resetLink = "http://localhost/Coffee-PHP-Project/reset_password.php?token=" . $token;
+                $subject = "Password Reset Request";
+                $message = "Hello,\n\nClick the link below to reset your password:\n\n" . $resetLink . "\n\nIf you did not request this, please ignore this email.";
+                $headers = "From: no-reply@localhost";
 
                 if (mail($email, $subject, $message, $headers)) {
                     $success = "A password reset link has been sent to your email.";
                 } else {
-                    $error = "Failed to send email.";
+                    $error = "Failed to send email. Please try again.";
                 }
             } else {
                 $error = "No user found with that email address.";
