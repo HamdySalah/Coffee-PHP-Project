@@ -12,6 +12,12 @@ if (isset($_GET['id'])) {
         $db = new Config();
         $conn = $db->connect();
 
+
+        $stmt = $conn->prepare("DELETE FROM Orders WHERE f_user_id = :user_id");
+        $stmt->bindParam(':user_id', $_GET['id']);
+        $stmt->execute();
+
+        // Delete the user
         $stmt = $conn->prepare("DELETE FROM User WHERE user_id = :user_id");
         $stmt->bindParam(':user_id', $_GET['id']);
         $stmt->execute();

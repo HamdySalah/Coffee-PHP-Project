@@ -6,10 +6,8 @@ require_once 'Database.php';
 $db = new Database();
 $conn = $db->connect();
 
-// Get categories for filter dropdown
 $categories = $db->fetchAllCategories();
 
-// Prepare product query with search and filter
 $products = $db->fetchProductsWithFilters($_GET['search'] ?? null, $_GET['category'] ?? null);
 
 ?>

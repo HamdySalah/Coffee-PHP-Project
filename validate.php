@@ -56,7 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error .= "EXT is required.<br>";
     }
 
-    // Handle file upload if no errors so far
     $profile_picture = null;
     if (empty($error) && isset($_FILES['pic']) && $_FILES['pic']['error'] == UPLOAD_ERR_OK) {
         $upload_dir = 'uploads/users/';
@@ -70,9 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (empty($error)) {
-        // Hash the password before storing it
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        // Insert user if no errors
         try {
             $db->insertUser($name, $email, $hashedPassword, $room, $ext, $profile_picture);
             $_SESSION['profile_picture'] = $profile_picture; // Store image in session

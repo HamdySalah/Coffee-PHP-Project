@@ -176,7 +176,7 @@ $total_revenue = array_sum(array_column($orders, 'total_price'));
 
                     <div class="text-center mt-4">
                         <a href="index.php" class="btn btn-secondary py-3 px-4">Back to Home</a>
-                        <a href="user_order_form.php" class="btn btn-primary py-3 px-4">Add Order for User</a>
+                        <a href="addorder.php" class="btn btn-primary py-3 px-4">Add Order for User</a>
                     </div>
                 </div>
             </div>

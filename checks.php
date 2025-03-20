@@ -50,7 +50,7 @@ $checks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $total_orders = count($checks);
 $total_price_all = array_sum(array_column($checks, 'total_price'));
 
-// Fetch revenue breakdown by product (unchanged)
+
 $revenue_stmt = $conn->prepare("
     SELECT p.product_name, SUM(op.quntity) AS total_sold, SUM(op.quntity * p.price) AS revenue
     FROM Orders o

@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 $db = new Database();
 $conn = $db->connect();
 
-// Fetch products ordered by product_id in descending order
+
 $products = $conn->query("SELECT * FROM Product WHERE status = 'available' ORDER BY product_id DESC")->fetchAll(PDO::FETCH_ASSOC);
 $users = $_SESSION['role'] == 1 ? $conn->query("SELECT * FROM User WHERE role = 0")->fetchAll(PDO::FETCH_ASSOC) : [];
 
@@ -43,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt->execute(['order_id' => $order_id, 'product_id' => $product_id, 'quantity' => $quantity]);
                 $inserted_products++;
             }
-
             if ($inserted_products > 0) {
                 header("Location: " . ($_SESSION['role'] == 1 ? "admin_orders.php" : "orders.php"));
                 exit();
@@ -51,7 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $error = "No valid products with quantities were selected.";
             }
         } catch (PDOException $e) {
+            error_log("PDOException in addorder.php: " . $e->getMessage());
             $error = "Error creating order: " . $e->getMessage();
+        } catch (Exception $e) {
+            error_log("Exception in addorder.php: " . $e->getMessage());
+            $error = $e->getMessage();
         }
     } else {
         $error = "Please select at least one product.";

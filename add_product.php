@@ -3,7 +3,6 @@ session_start();
 require_once 'config.php';
 require_once 'Database.php';
 
-// Check if user is logged in and has admin role (uncommented and fixed)
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../public/index.php");
     exit();
@@ -15,34 +14,31 @@ $conn = $db->connect();
 $categories = $db->fetchAllCategories();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = trim($_POST['name']); // Sanitize input
-    $price = floatval($_POST['price']); // Ensure price is a float
-    $category_id = intval($_POST['category_id']); // Ensure integer
+    $name = trim($_POST['name']); 
+    $price = floatval($_POST['price']); 
+    $category_id = intval($_POST['category_id']); 
     $status = $_POST['status'];
 
-    // Validate inputs
+
     if (empty($name) || $price <= 0 || !$category_id) {
         $error = "Invalid input data";
     } else {
-        // Handle file upload
+
         $product_image = null;
         if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 0) {
             $target_dir = "uploads/product/";
-            // Ensure directory exists
+
             if (!file_exists($target_dir)) {
                 mkdir($target_dir, 0777, true);
             }
-            if ($_FILES["profile_picture"]["size"] > 2 * 1024 * 1024) {
+            if ($_FILES["product_picture"]["size"] > 2 * 1024 * 1024) { // Corrected key here
                 die("File is too large. Max size is 2MB.");
             }
-            $imageFileType = strtolower(pathinfo($_FILES["product_picture"]["name"], PATHINFO_EXTENSION));
-            // Generate unique filename to avoid overwrites
+            $imageFileType = strtolower(pathinfo($_FILES["product_picture"]["name"], PATHINFO_EXTENSION)); // Corrected key here
             $new_filename = $target_dir . $name . '_' . uniqid() . '.' . $imageFileType;
-
-            // Validate image
             $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
-            if (in_array($imageFileType, $allowed_types) && getimagesize($_FILES["product_picture"]["tmp_name"])) {
-                if (move_uploaded_file($_FILES["product_picture"]["tmp_name"], $new_filename)) {
+            if (in_array($imageFileType, $allowed_types) && getimagesize($_FILES["product_picture"]["tmp_name"])) { // Corrected key here
+                if (move_uploaded_file($_FILES["product_picture"]["tmp_name"], $new_filename)) { // Corrected key here
                     $product_image = $new_filename;
                 } else {
                     $error = "Failed to upload image";
@@ -54,15 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (!isset($error)) {
             try {
-                $stmt = $conn->prepare("INSERT INTO Product (product_name, price, f_category_id, status, product_image) 
-                                      VALUES (:name, :price, :category_id, :status, :product_image)");
-                $stmt->execute([
-                    'name' => $name,
-                    'price' => $price,
-                    'category_id' => $category_id,
-                    'status' => $status,
-                    'product_image' => $product_image
-                ]);
+                $db->insertProduct($name, $price, $category_id, $status, $product_image);
                 header("Location: product.php");
                 exit();
             } catch (PDOException $e) {
