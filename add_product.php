@@ -4,7 +4,7 @@ require_once 'config.php';
 require_once 'Database.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
-    header("Location: ../public/index.php");
+    header("Location: login.php");
     exit();
 }
 
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($_FILES["product_picture"]["size"] > 2 * 1024 * 1024) { // Corrected key here
                 die("File is too large. Max size is 2MB.");
             }
-            $imageFileType = strtolower(pathinfo($_FILES["product_picture"]["name"], PATHINFO_EXTENSION)); // Corrected key here
+            $imageFileType = strtolower(pathinfo($_FILES["product_picture"]["name"], PATHINFO_EXTENSION)); 
             $new_filename = $target_dir . $name . '_' . uniqid() . '.' . $imageFileType;
             $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
             if (in_array($imageFileType, $allowed_types) && getimagesize($_FILES["product_picture"]["tmp_name"])) { // Corrected key here
