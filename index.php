@@ -1,12 +1,18 @@
-<?php require "includes/header.php"; ?>
 <?php
-require_once 'config.php';
-require_once 'Database.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start(); // Start session only if not already active
+}
+require "includes/header.php"; ?>
+<?php
 
-if(!isset($_SESSION['user_id'])) {
-    header("Location:login.php");
+// Redirect to login if user_id is not set
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
     exit();
 }
+
+require_once 'config.php';
+require_once 'Database.php';
 
 $db = new Database();
 

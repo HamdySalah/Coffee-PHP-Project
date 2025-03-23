@@ -3,37 +3,46 @@ session_start();
 require_once 'config.php';
 require_once 'Database.php';
 
+// Generate CSRF token
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['logpass'];
-
-    if (empty($email) || empty($password)) {
-        $error = "Email and password are required.";
+    if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $error = "Invalid CSRF token.";
     } else {
-        try {
-            $db = new Database();
-            $user = $db->fetchUserByEmail($email);
+        $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+        $password = trim($_POST['logpass']);
 
-            // Debugging: Log fetched user data
-            // Remove these logs in production
-            error_log("Fetched user: " . print_r($user, true));
+        if (empty($email) || empty($password)) {
+            $error = "Email and password are required.";
+        } else {
+            try {
+                $db = new Database();
+                $user = $db->fetchUserByEmail($email);
 
-            if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['user_id'] = $user['user_id'];
-                $_SESSION['role'] = $user['role'];
-                $_SESSION['user_name'] = $user['user_name'];
-                $_SESSION['profile_picture'] = $user['profile_picture'];
-                header("Location: index.php");
-                exit();
-            } else {
-                // Debugging: Log password verification result
-                error_log("Password verification failed for email: $email");
-                $error = "Incorrect email or password.";
+                // Debugging: Log fetched user data
+                // Remove these logs in production
+                error_log("Fetched user: " . print_r($user, true));
+
+                if ($user && password_verify($password, $user['password'])) {
+                    $_SESSION['user_id'] = $user['user_id'];
+                    $_SESSION['role'] = $user['role'];
+                    $_SESSION['user_name'] = $user['user_name'];
+                    $_SESSION['profile_picture'] = $user['profile_picture'];
+                    header("Location: index.php");
+                    exit();
+                } else {
+                    // Debugging: Log password verification result
+                    error_log("Password verification failed for email: $email");
+                    $error = "Incorrect email or password.";
+                }
+            } catch (PDOException $e) {
+                $error = "Database error: " . $e->getMessage();
             }
-        } catch (PDOException $e) {
-            $error = "Database error: " . $e->getMessage();
         }
     }
 }
@@ -72,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row">
           <div class="col-md-12 ftco-animate">
             <form action="login.php" class="billing-form ftco-bg-dark p-3 p-md-5" method="post">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <h3 class="mb-4 billing-heading">Login</h3>
                 <?php if (!empty($error)): ?>
                     <p class="error" style="color: red;" ><?php echo $error; ?></p>

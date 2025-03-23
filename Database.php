@@ -41,8 +41,6 @@ class Database extends Config {
         $stmt->execute(['order_id' => $order_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
-    // Method to fetch all rooms
     public function fetchAllRooms() {
         $stmt = $this->connect()->query("SELECT * FROM user_room");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -79,7 +77,6 @@ class Database extends Config {
             throw $e;
         }
     }
-
     public function fetchEmailByToken($token) {
         $stmt = $this->connect()->prepare("SELECT email FROM password_resets WHERE token = :token");
         $stmt->execute(['token' => $token]);

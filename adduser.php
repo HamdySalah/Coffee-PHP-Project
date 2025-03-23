@@ -11,6 +11,63 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
 $db = new Database();
 $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
 unset($_SESSION['error']); 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $room = $_POST['room'];
+    $ext = trim($_POST['ext']);
+    $profile_picture = null;
+    if (empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($room) || empty($ext)) {
+        $error = "All fields are required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Invalid email format.";
+    } elseif ($password !== $confirm_password) {
+        $error = "Passwords do not match.";
+    } else {
+        if (isset($_FILES['pic']) && $_FILES['pic']['error'] == 0) {
+            $target_dir = "uploads/users/";
+            if (!file_exists($target_dir)) {
+                mkdir($target_dir, 0777, true);
+            }
+            $imageFileType = strtolower(pathinfo($_FILES['pic']['name'], PATHINFO_EXTENSION));
+            $new_filename = $target_dir . $username . '_' . uniqid() . '.' . $imageFileType;
+            $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+            if (in_array($imageFileType, $allowed_types) && getimagesize($_FILES['pic']['tmp_name'])) {
+                if (move_uploaded_file($_FILES['pic']['tmp_name'], $new_filename)) {
+                    $profile_picture = $new_filename;
+                } else {
+                    $error = "Failed to upload profile picture.";
+                }
+            } else {
+                $error = "Invalid image format.";
+            }
+        }
+        if (!isset($error)) {
+            try {
+                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+                $db->insertUser($username, $email, $hashed_password, $room, $ext, $profile_picture);
+                $_SESSION['success'] = "User added successfully.";
+                header("Location: users.php");
+                exit();
+            } catch (PDOException $e) {
+                $error = "Database error: " . $e->getMessage();
+            }
+        }
+    }
+    $to = $_POST['email'];
+    $subject = "Welcome to Coffee!";
+    $message = "Dear " . htmlspecialchars($_POST['username']) . ",\n\nWelcome to Coffee! Your account has been successfully created.\n\nBest regards,\nCoffee Team";
+    $headers = "From: no-reply@coffee.com";
+
+    if (mail($to, $subject, $message, $headers)) {
+        echo "<p class='text-success text-center'>User added successfully, and an email has been sent.</p>";
+    } else {
+        echo "<p class='text-danger text-center'>User added successfully, but the email could not be sent.</p>";
+    }
+}
 ?>
 
 <!DOCTYPE html>

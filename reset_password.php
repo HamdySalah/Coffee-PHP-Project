@@ -5,13 +5,22 @@ require_once 'Database.php';
 $error = "";
 $success = "";
 
+// Generate CSRF token
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $token = $_POST['token'];
-    $new_password = $_POST['new_password'];
-    $confirm_password = $_POST['confirm_password'];
+    $token = filter_var(trim($_POST['token']), FILTER_SANITIZE_STRING);
+    $new_password = trim($_POST['new_password']);
+    $confirm_password = trim($_POST['confirm_password']);
 
     if (empty($token) || empty($new_password) || empty($confirm_password)) {
         $error = "All fields are required.";
+    } elseif (!preg_match('/^[a-f0-9]{100}$/', $token)) {
+        $error = "Invalid token format.";
+    } elseif ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $error = "Invalid CSRF token.";
     } elseif ($new_password !== $confirm_password) {
         $error = "Passwords do not match.";
     } else {
@@ -24,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $db->deleteResetToken($token);
                 $success = "Your password has been reset successfully.";
             } else {
-                $error = "Invalid token.";
+                $error = "The reset token is invalid or has expired. Please request a new password reset.";
             }
         } catch (PDOException $e) {
             $error = "Database error: " . $e->getMessage();
@@ -67,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                     </div>
                     <input type="hidden" name="token" value="<?php echo $_GET['token']; ?>">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <div class="col-md-12">
                         <div class="form-group mt-4">
                             <div class="radio">

@@ -5,9 +5,10 @@ if (session_status() == PHP_SESSION_NONE) {
 require_once 'config.php';
 //echo SITE_NAME;
 
-if(!$_SESSION['profile_picture']) {
-  $_SESSION['profile_picture'] = 'uploads/profile-user.png';
-}
+// Check if session variables are set, provide defaults if not
+$profile_picture = $_SESSION['profile_picture'] ?? 'uploads/profile-user.png';
+$role = $_SESSION['role'] ?? null;
+$user_name = $_SESSION['user_name'] ?? 'Guest';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +64,7 @@ if(!$_SESSION['profile_picture']) {
           </button>
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav mx-auto">
-              <?php if($_SESSION['role'] == 1): ?>
+              <?php if($role == 1): ?>
               <li class="nav-item <?php echo $current_page == 'index.php' ? 'active' : ''; ?>"><a href="index.php" class="nav-link">Home</a></li>
               <li class="nav-item <?php echo $current_page == 'product.php' ? 'active' : ''; ?>"><a href="product.php" class="nav-link">Products</a></li>
               <li class="nav-item <?php echo $current_page == 'user.php' ? 'active' : ''; ?>"><a href="user.php" class="nav-link">Users</a></li>
@@ -77,13 +78,13 @@ if(!$_SESSION['profile_picture']) {
               <?php endif; ?>
             </ul>
             <div class="user-profile">
-              <img src="<?php echo $_SESSION['profile_picture'] ?>" alt="User Profile Picture">
+              <img src="<?php echo $profile_picture ?>" alt="User Profile Picture">
               <div class="dropdown">
                 <a style="font-family: 'Great Vibes', cursive;" class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <?php echo $_SESSION['user_name']; ?>
+                  <?php echo $user_name; ?>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="userDropdown">
-                  <a class="dropdown-item" href="index.php"><?php echo $_SESSION['user_name']; ?></a>
+                  <a class="dropdown-item" href="index.php"><?php echo $user_name; ?></a>
                   <a class="dropdown-item" href="logout.php">Logout</a>
                 </div>
               </div>

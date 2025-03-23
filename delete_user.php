@@ -12,7 +12,12 @@ if (isset($_GET['id'])) {
         $db = new Config();
         $conn = $db->connect();
 
+        // Delete related rows in Order_product
+        $stmt = $conn->prepare("DELETE FROM Order_product WHERE f_order_id IN (SELECT order_id FROM Orders WHERE f_user_id = :user_id)");
+        $stmt->bindParam(':user_id', $_GET['id']);
+        $stmt->execute();
 
+        // Delete related orders
         $stmt = $conn->prepare("DELETE FROM Orders WHERE f_user_id = :user_id");
         $stmt->bindParam(':user_id', $_GET['id']);
         $stmt->execute();
