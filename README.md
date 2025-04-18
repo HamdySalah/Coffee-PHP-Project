@@ -29,9 +29,3 @@ coffee-shop/
 │   ├── backup/            # Backup copies of the database
 │   ├── db_connection.php  # PHP file to connect to MySQL
 │   ├── db_init.sql        # Main script to create the database
-
-# يارب
-#حاجه صح الصح 
-#مصطفي بن حسني
-
-# hi this is yasmeen
